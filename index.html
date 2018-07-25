@@ -61,6 +61,110 @@
       <div id="main" class="wrapper">
         <div id="primary" class="site-content"><div id="content" role="main">
   
+    <article id="post-Vue-进阶之调用电脑摄像头" class="post-Vue-进阶之调用电脑摄像头 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/2018/07/25/Vue-进阶之调用电脑摄像头/">Vue 进阶之调用电脑摄像头</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/07/25/Vue-进阶之调用电脑摄像头/" data-id="cjk1clenk0000tcx5kc0sb8qk" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <p>在开发过程中，硬件是你不得不面对的一件事<br>软硬结合是现代发展趋势，今天<br>我就讲解一下，最近面对的一个问题<br>如何快速调用电脑的摄像头，拍照并生成一张图片进行人脸识别（识别这块放在下期）<br>最近在用vue开发，今天的主题也是在vue的基础上O(∩_∩)O哈哈~<br>先上代码w(ﾟДﾟ)w<br>&lt;!–前端代码–/&gt;<br>开启摄像头的时候，前端页面先给一个实时录像</p>
+<p><video id="video" autoplay style="width:640px;height:480px"></video><br>点击拍照事件</p>
+<p><el-button id="picture" @click="pImage">拍摄</el-button><br>生成的照片，用canvas生成</p>
+<canvas id="canvas" width="640" height="480"></canvas>
+
+<!--js代码-->
+<p>实现起来超简单的</p>
+<p>camera_process(){<br>        //访问用户媒体设备的兼容方法<br>        function getUserMedia(constraints, success, error) {<br>          if (navigator.mediaDevices.getUserMedia) {<br>            //最新的标准API<br>            navigator.mediaDevices.getUserMedia(constraints).then(success).catch(error);<br>          } else if (navigator.webkitGetUserMedia) {<br>            //webkit核心浏览器<br>            navigator.webkitGetUserMedia(constraints,success, error)<br>          } else if (navigator.mozGetUserMedia) {<br>            //firfox浏览器<br>            navigator.mozGetUserMedia(constraints, success, error);<br>          } else if (navigator.getUserMedia) {<br>            //旧版API<br>            navigator.getUserMedia(constraints, success, error);<br>          }<br>        }</p>
+<pre><code>  function success(stream) {
+    //兼容webkit核心浏览器
+    let CompatibleURL = window.URL || window.webkitURL;
+    //将视频流设置为video元素的源
+    //console.log(stream);
+
+    //video.src = CompatibleURL.createObjectURL(stream);
+    video.srcObject = stream;
+    video.play();
+  }
+
+  function error(error) {
+    console.log(`访问用户媒体设备失败${error.name}, ${error.message}`);
+  }
+
+  let video = document.getElementById(&apos;video&apos;);
+  let canvas = document.getElementById(&apos;canvas&apos;);
+  let context = canvas.getContext(&apos;2d&apos;);
+  let image = new Image();
+
+  if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
+    //调用用户媒体设备, 访问摄像头
+    getUserMedia({video : {width: 480, height: 320}}, success, error);
+  } else {
+    alert(&apos;不支持访问用户媒体&apos;);
+  }
+
+
+}
+</code></pre><p>这里是调用实时摄像的代码，在vue中，最好把camera_process函数放在 mounted里面<br>进入页面就开始缓加载</p>
+<p>pImage() {<br>        let context = canvas.getContext(‘2d’);<br>        let image = new Image();<br>        context.drawImage(video, 0, 0, 480, 320);<br>        // console.log(context.drawImage);<br>        image = canvas.toDataURL(“image/jpeg”);//base64</p>
+<pre><code>  this.$data.takeImages = image;
+  // console.log(this.$data.takeImages)
+
+  document.getElementById(&apos;getVideo&apos;).style.display = &apos;none&apos;;
+  //  获取头像
+  this.getShowVideo = false;
+  this.dialogVisible = true;
+}
+</code></pre><p>点击开始拍摄，并生成canvas 照片</p>
+<p>(<em>^▽^</em>)，这些都很简单的，只要代码copy一份就能实现<br>但是，接下来，你要传给后台了，万事离不开最终实践</p>
+<p>canvas生成的图片是不能直接传给后台的，需要做一系列处理</p>
+<p>1.首先 先把canvas转化为base64格式<br>image = canvas.toDataURL(“image/jpeg”);//base64</p>
+<p>2.转化之后发现，卧槽，数据流也太长了吧，传过去完全是消耗性能<br>一定要转化为file模式才行<br>dataURLtoFile(dataurl, filename){<br>        var arr = dataurl.split(‘,’), mime = arr[0].match(/:(.*?);/)[1],<br>          bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);<br>        while(n–){<br>          u8arr[n] = bstr.charCodeAt(n);<br>        }<br>        return new File([u8arr], filename, {type:mime});<br>      }</p>
+<p>这是从base64转化file的函数<br>3.调用函数，转化为file，发给后台<br>let file = this.dataURLtoFile(this.$data.takeImages,’testaaa.jpg’);<br>let list = new FormData();<br>list.append(‘file’, file);</p>
+<p>(<em>^▽^</em>)简简单单的调用摄像头拍摄照片就这样完成了</p>
+<p>后记：<br>稍微讲解一下关于 DataUrl 与 file，Blob，canvas之间的相互转化</p>
+<p>1.canvas转化为dataURl<br>let a = canvas.toDataURl(‘b/png’)  //base64</p>
+<p>2.file转化为 dataURL / Blob 转化为dataURL (两者方式一样)<br>function readBlobAsDataURL(blob, callback) {<br>    var a = new FileReader();<br>    a.onload = function(e) {callback(e.target.result);};<br>    a.readAsDataURL(blob);<br>}</p>
+<p>readBlobAsDataURL(blob, function (dataurl){<br>    console.log(dataurl);<br>});<br>readBlobAsDataURL(file, function (dataurl){<br>    console.log(dataurl);<br>});</p>
+<p>3.dataURL转化为Blob / dataURL转化为File  （IE不支持File对象构造函数）<br>function dataURLtoBlob(dataurl) {<br>    var arr = dataurl.split(‘,’), mime = arr[0].match(/:(.<em>?);/)[1],<br>        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);<br>    while(n–){<br>        u8arr[n] = bstr.charCodeAt(n);<br>    }<br>    return new Blob([u8arr], {type:mime});<br>}<br>function dataURLtoFile(dataurl, filename) {<br>    var arr = dataurl.split(‘,’), mime = arr[0].match(/:(.</em>?);/)[1],<br>        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);<br>    while(n–){<br>        u8arr[n] = bstr.charCodeAt(n);<br>    }<br>    return new File([u8arr], filename, {type:mime});<br>}<br>//test:<br>var blob = dataURLtoBlob(‘data:text/plain;base64,YWFhYWFhYQ==’);<br>var file = dataURLtoFile(‘data:text/plain;base64,YWFhYWFhYQ==’, ‘test.txt’);</p>
+<p>4.dataURL 转化为canvas  （(<em>^▽^</em>)很好玩的）<br>var img = new Image();<br>img.onload = function(){<br>    canvas.drawImage(img);<br>};<br>img.src = dataurl;</p>
+<p>5.File/Blob 绘制到canvas上<br>readBlobAsDataURL(file, function (dataurl){<br>    var img = new Image();<br>    img.onload = function(){<br>        canvas.drawImage(img);<br>    };<br>    img.src = dataurl;<br>});</p>
+<p>6.Canvas转换为Blob对象并使用Ajax发送<br>var dataurl = canvas.toDataURL(‘image/png’);<br>var blob = dataURLtoBlob(dataurl);<br>//使用ajax发送<br>var fd = new FormData();<br>fd.append(“image”, blob, “image.png”);<br>var xhr = new XMLHttpRequest();<br>xhr.open(‘POST’, ‘/server’, true);<br>xhr.send(fd);</p>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2018/07/25/Vue-进阶之调用电脑摄像头/">
+    <time datetime="2018-07-25T04:07:52.000Z" class="entry-date">
+        2018-07-25
+    </time>
+</a>
+    
+    
+    </footer>
+</article>
+
+
+
+
+
+
+  
     <article id="post-git-使用命令-工作流" class="post-git-使用命令-工作流 post type-post status-publish format-standard hentry">
     <!---->
 
@@ -76,7 +180,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/git-使用命令-工作流/" data-id="cjhly8x6x0000w8x5eyr1t2we" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/git-使用命令-工作流/" data-id="cjk1cleo00001tcx5t01igmes" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -139,7 +243,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/搭建blog-of-second/" data-id="cjhly8x7a0004w8x50rw2rxt4" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/搭建blog-of-second/" data-id="cjk1cleo70005tcx5rb68w5ro" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -240,7 +344,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/24/我的第一篇文章/" data-id="cjhly8x760002w8x5ua9pwxnv" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/24/我的第一篇文章/" data-id="cjk1cleo50004tcx5hcvgrmvn" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -302,7 +406,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/24/搭建blog-of-first/" data-id="cjhly8x780003w8x5bv729ml9" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/24/搭建blog-of-first/" data-id="cjk1cleo40003tcx50neas12e" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -373,7 +477,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/23/hello-world/" data-id="cjhly8x730001w8x5so42k75m" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/23/hello-world/" data-id="cjk1cleo20002tcx5zowe1hez" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -432,6 +536,10 @@
       <ul>
         
           <li>
+            <a href="/2018/07/25/Vue-进阶之调用电脑摄像头/">Vue 进阶之调用电脑摄像头</a>
+          </li>
+        
+          <li>
             <a href="/2018/05/25/git-使用命令-工作流/">git 使用命令(工作流)</a>
           </li>
         
@@ -445,10 +553,6 @@
         
           <li>
             <a href="/2018/05/24/搭建blog-of-first/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2018/05/23/hello-world/">Hello World</a>
           </li>
         
       </ul>
