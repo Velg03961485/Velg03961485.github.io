@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="刚接触vue 对里面的使用方法十分不熟练从demo操作转到数据类型操作，中间还是有很多坑要填的0.0今天，讲解的是，如何自己封装插件转换时间类型首先，你的插件要能全局调用在 config.js 创建插件  globalFunction.js  这里的命名最好驼峰式有遇到“烤串”命名法，不被识别，好坑" />
+  
+
+  
+  
+  
+  
+  
+  
+  <title>vue 进阶之封装全局插件 | Velg 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="刚接触vue 对里面的使用方法十分不熟练从demo操作转到数据类型操作，中间还是有很多坑要填的0.0今天，讲解的是，如何自己封装插件转换时间类型首先，你的插件要能全局调用在 config.js 创建插件  globalFunction.js  这里的命名最好驼峰式有遇到“烤串”命名法，不被识别，好坑 //写一个时间转化函数  123456789101112131415161718192021222">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue 进阶之封装全局插件">
+<meta property="og:url" content="http://yoursite.com/2018/08/06/vue-进阶之封装全局插件/index.html">
+<meta property="og:site_name" content="Velg 的博客">
+<meta property="og:description" content="刚接触vue 对里面的使用方法十分不熟练从demo操作转到数据类型操作，中间还是有很多坑要填的0.0今天，讲解的是，如何自己封装插件转换时间类型首先，你的插件要能全局调用在 config.js 创建插件  globalFunction.js  这里的命名最好驼峰式有遇到“烤串”命名法，不被识别，好坑 //写一个时间转化函数  123456789101112131415161718192021222">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-06T04:49:43.350Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue 进阶之封装全局插件">
+<meta name="twitter:description" content="刚接触vue 对里面的使用方法十分不熟练从demo操作转到数据类型操作，中间还是有很多坑要填的0.0今天，讲解的是，如何自己封装插件转换时间类型首先，你的插件要能全局调用在 config.js 创建插件  globalFunction.js  这里的命名最好驼峰式有遇到“烤串”命名法，不被识别，好坑 //写一个时间转化函数  123456789101112131415161718192021222">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src='//push.zhanzhang.baidu.com/push.js'></script>
+</head>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Velg 的博客" rel="home">Velg 的博客</a>
+      </h1>
+      
+        <script type="text/javascript" src="http://api.hitokoto.us/rand?encode=js&charset=utf-8"></script>
+        <h2 class="site-description"><script>hitokoto();</script></h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/archives">Archives</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-vue-进阶之封装全局插件" class="post-vue-进阶之封装全局插件 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      vue 进阶之封装全局插件
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/06/vue-进阶之封装全局插件/" data-id="cjkhs8m5f0003csx53tci4fy8" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <p>刚接触vue 对里面的使用方法十分不熟练<br>从demo操作转到数据类型操作，中间还是有很多坑要填的0.0<br>今天，讲解的是，如何自己封装插件转换时间类型<br>首先，你的插件要能全局调用<br>在 config.js 创建插件  globalFunction.js  这里的命名最好驼峰式<br>有遇到“烤串”命名法，不被识别，好坑<br> //写一个时间转化函数</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">let format = (value) =&gt; &#123;</span><br><span class="line">  return value &gt;= 10 ? value : &apos;0&apos; + value</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">exports.install = function (Vue, options) &#123;</span><br><span class="line">  Vue.prototype.TimeOut = function (time, type)&#123;</span><br><span class="line">    let date = new Date(time * 1000);</span><br><span class="line">    let year = date.getFullYear()</span><br><span class="line">    let month = date.getMonth() + 1</span><br><span class="line">    let day = date.getDate()</span><br><span class="line">    let hours = date.getHours()</span><br><span class="line">    let minutes = date.getMinutes()</span><br><span class="line">    let second = date.getSeconds()</span><br><span class="line">    let result</span><br><span class="line">    switch (type) &#123;</span><br><span class="line">      case 0: // 01-05</span><br><span class="line">        result = `$&#123;format(month)&#125;月$&#123;format(day)&#125;日`</span><br><span class="line">        break</span><br><span class="line">      case 1: // 11:12</span><br><span class="line">        result = `$&#123;format(hours)&#125;:$&#123;format(minutes)&#125;:$&#123;format(second)&#125;`</span><br><span class="line">        break</span><br><span class="line">      case 2: // 2015-01-05</span><br><span class="line">        result = `$&#123;year&#125;-$&#123;format(month)&#125;-$&#123;format(day)&#125;`</span><br><span class="line">        break</span><br><span class="line">      case 3: // 2015-01-05 11:12</span><br><span class="line">        result = `$&#123;year&#125;-$&#123;format(month)&#125;-$&#123;format(day)&#125;  $&#123;format(hours)&#125;:$&#123;format(minutes)&#125;`</span><br><span class="line">        break</span><br><span class="line">      case 4:// 2015-01-05 11:12:06</span><br><span class="line">        result = `$&#123;year&#125;-$&#123;format(month)&#125;-$&#123;format(day)&#125;  $&#123;format(hours)&#125;:$&#123;format(minutes)&#125;:$&#123;format(second)&#125;`</span><br><span class="line">        break</span><br><span class="line">      case 5:// Jan 05, 2015 11:12:06</span><br><span class="line">        result = date.format(&apos;M dd, yyyy HH:mm:ss&apos;)</span><br><span class="line">        break</span><br><span class="line">      case 6:// Jan 05, 2015</span><br><span class="line">        result = date.format(&apos;M dd, yyyy&apos;)</span><br><span class="line">        break</span><br><span class="line">      case 7:// Jan 05, 2015</span><br><span class="line">        result = `$&#123;year&#125;年$&#123;format(month)&#125;月$&#123;format(day)&#125;日  $&#123;format(hours)&#125;:$&#123;format(minutes)&#125;`</span><br><span class="line">        break</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return result;</span><br><span class="line"></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>Vue.prototype 指向你自己封装的函数，方面以后自己调用<br>然后在 main.js 里面 引入函数生成全局调用<br>import globalFunction from ‘@/assets/config/globalFunction’<br>Vue.use(globalFunction);   //这一步一定不能忘</p>
+<p>接下来在子组件里面 任何一个函数，获取到时间值，直接调用<br>this.TimeOut()</p>
+<p>例如  console.log(this.TimeOut(1533686888,4))  //2018-08-08  08:08:08</p>
+<p>结尾：<br>对插件稍微介绍一下<br>timeOut 是封装的函数,通过传值和要转化的时间类型，对值进行解析转化，<br>这个函数还可以放在 filter里面 封装一个 html页面的时间过滤插件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">export const dateFilter = (time, type) =&gt; &#123;</span><br><span class="line">  let date = new Date(time * 1000)</span><br><span class="line">  let year = date.getFullYear()</span><br><span class="line">  let month = date.getMonth() + 1</span><br><span class="line">  let day = date.getDate()</span><br><span class="line">  let hours = date.getHours()</span><br><span class="line">  let minutes = date.getMinutes()</span><br><span class="line">  let second = date.getSeconds()</span><br><span class="line">  let result</span><br><span class="line">  switch (type) &#123;</span><br><span class="line">    case 0: // 01-05</span><br><span class="line">      result = `$&#123;format(month)&#125;月$&#123;format(day)&#125;日`</span><br><span class="line">      break</span><br><span class="line">    case 1: // 11:12</span><br><span class="line">      result = `$&#123;format(hours)&#125;:$&#123;format(minutes)&#125;:$&#123;format(second)&#125;`</span><br><span class="line">      break</span><br><span class="line">    case 2: // 2015-01-05</span><br><span class="line">      result = `$&#123;year&#125;-$&#123;format(month)&#125;-$&#123;format(day)&#125;`</span><br><span class="line">      break</span><br><span class="line">    case 3: // 2015-01-05 11:12</span><br><span class="line">      result = `$&#123;year&#125;-$&#123;format(month)&#125;-$&#123;format(day)&#125;  $&#123;format(hours)&#125;:$&#123;format(minutes)&#125;`</span><br><span class="line">      break</span><br><span class="line">    case 4:// 2015-01-05 11:12:06</span><br><span class="line">      result = `$&#123;year&#125;-$&#123;format(month)&#125;-$&#123;format(day)&#125;  $&#123;format(hours)&#125;:$&#123;format(minutes)&#125;:$&#123;format(second)&#125;`</span><br><span class="line">      break</span><br><span class="line">    case 5:// Jan 05, 2015 11:12:06</span><br><span class="line">      result = date.format(&apos;M dd, yyyy HH:mm:ss&apos;)</span><br><span class="line">      break</span><br><span class="line">    case 6:// Jan 05, 2015</span><br><span class="line">      result = date.format(&apos;M dd, yyyy&apos;)</span><br><span class="line">      break</span><br><span class="line">    case 7:// Jan 05, 2015</span><br><span class="line">      result = `$&#123;year&#125;年$&#123;format(month)&#125;月$&#123;format(day)&#125;日  $&#123;format(hours)&#125;:$&#123;format(minutes)&#125;`</span><br><span class="line">      break</span><br><span class="line">  &#125;</span><br><span class="line">  return result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后在main.js 里面调用<br>//import * as filters from ‘./filters’<br>//Vue.filter(‘date’, filters.dateFilter)</p>
+<p>vue页面里面直接 数据绑定，进行过滤<br>scope.row.time | date(4)</p>
+<p>(<em>^▽^</em>),结束…完美封装一个插件<br>推荐一首歌  Lifted -Allie X ,飘飘欲仙  让人觉得，放纵，是一种飘在<br>云端的逍遥</p>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2018/08/06/vue-进阶之封装全局插件/">
+    <time datetime="2018-08-06T04:34:06.000Z" class="entry-date">
+        2018-08-06
+    </time>
+</a>
+    
+    
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+    
+        <span class="nav-next"><a href="/2018/07/25/Vue-进阶之调用电脑摄像头/" rel="next">Vue 进阶之调用电脑摄像头 <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="s" id="s" />
+        <input type="submit" id="searchsubmit" value="搜索" />
+    </div>
+</form></aside>
+  
+    
+  
+    
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/06/vue-进阶之封装全局插件/">vue 进阶之封装全局插件</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/25/Vue-进阶之调用电脑摄像头/">Vue 进阶之调用电脑摄像头</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/25/git-使用命令-工作流/">git 使用命令(工作流)</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/25/搭建blog-of-second/">搭建blog of second</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/24/我的第一篇文章/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  
+    
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2018 刘大旭
+    All rights reserved.</p>
+    <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
+</footer>
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>
