@@ -61,6 +61,54 @@
       <div id="main" class="wrapper">
         <div id="primary" class="site-content"><div id="content" role="main">
   
+    <article id="post-Vue-面包屑导航" class="post-Vue-面包屑导航 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/2018/08/14/Vue-面包屑导航/">Vue 面包屑导航</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/14/Vue-面包屑导航/" data-id="cjktiepo20000ccx55jhlrjmu" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <p>最近在写vue的面包屑导航菜单<br>要实现 在面包屑的基础上能来回跳转页面（页面间交互很多，需要传值）<br>1.首先 明确页面布局<br>在 main.vue 里面 调整顶部栏，侧边栏以及content<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div class=&quot;main-box&quot;&gt;</span><br><span class="line">      &lt;navbar ref=&quot;header&quot;&gt;&lt;/navbar&gt;</span><br><span class="line">      &lt;sidebar ref=&quot;leftmenu&quot;&gt;&lt;/sidebar&gt;</span><br><span class="line">      &lt;div class=&quot;content&quot; ref=&quot;content&quot;&gt;</span><br><span class="line">        &lt;router-view&gt;&lt;/router-view&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure></p>
+<p>在这里还有一个重要的函数，当路由发生变化的时候，要让面包屑也发生改变<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">fetchData: function () &#123;</span><br><span class="line">      let pathName = this.$route.name</span><br><span class="line">      // 判断当前路径，设置菜单效果</span><br><span class="line">      let usercenter = this.$refs.content</span><br><span class="line">      let sidebar = this.$refs.leftmenu</span><br><span class="line"></span><br><span class="line">      if (usercenter) &#123;</span><br><span class="line">        usercenter.navMenu = pathName</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      switch (pathName) &#123;</span><br><span class="line">        // 商家</span><br><span class="line">        case &apos;BusinessList&apos;:</span><br><span class="line">        case &apos;Modules&apos;:</span><br><span class="line">          sidebar.defaultActive = &apos;2-1&apos;</span><br><span class="line">          sidebar.imgSrcHome = &apos;static/images/main/home.png&apos;</span><br><span class="line">          break</span><br><span class="line">        // 设备</span><br><span class="line">        case &apos;Pallet&apos;:</span><br><span class="line">        case &apos;Store&apos;:</span><br><span class="line">        case &apos;Device&apos;:</span><br><span class="line">          sidebar.defaultActive = &apos;3-1&apos;</span><br><span class="line">          sidebar.imgSrcHome = &apos;static/images/main/home.png&apos;</span><br><span class="line">          break</span><br><span class="line">        case &apos;Flow&apos;:</span><br><span class="line">          sidebar.defaultActive = &apos;3-2&apos;</span><br><span class="line">          sidebar.imgSrcHome = &apos;static/images/main/home.png&apos;</span><br><span class="line">          break</span><br><span class="line">        case &apos;Face&apos;:</span><br><span class="line">          sidebar.defaultActive = &apos;3-3&apos;</span><br><span class="line">          sidebar.imgSrcHome = &apos;static/images/main/home.png&apos;</span><br><span class="line">          break</span><br><span class="line">        case &apos;Counter&apos;:</span><br><span class="line">          sidebar.defaultActive = &apos;3-4&apos;</span><br><span class="line">          sidebar.imgSrcHome = &apos;static/images/main/home.png&apos;</span><br><span class="line">          break</span><br><span class="line">        // 设置</span><br><span class="line">        case &apos;AccountNumber&apos;:</span><br><span class="line">          sidebar.defaultActive = &apos;4-1&apos;</span><br><span class="line">          sidebar.imgSrcHome = &apos;static/images/main/home.png&apos;</span><br><span class="line">          break</span><br><span class="line">        case &apos;Role&apos;:</span><br><span class="line">          sidebar.defaultActive = &apos;4-2&apos;</span><br><span class="line">          sidebar.imgSrcHome = &apos;static/images/main/home.png&apos;</span><br><span class="line">          break</span><br><span class="line">        case &apos;Power&apos;:</span><br><span class="line">          sidebar.defaultActive = &apos;4-3&apos;</span><br><span class="line">          sidebar.imgSrcHome = &apos;static/images/main/home.png&apos;</span><br><span class="line">          break</span><br><span class="line">        // 工作日志</span><br><span class="line">        case &apos;LoginList&apos;:</span><br><span class="line">          sidebar.defaultActive = &apos;5-1&apos;</span><br><span class="line">          sidebar.imgSrcHome = &apos;static/images/main/home.png&apos;</span><br><span class="line">          break</span><br><span class="line">        case &apos;ActiveList&apos;:</span><br><span class="line">          sidebar.defaultActive = &apos;5-2&apos;</span><br><span class="line">          sidebar.imgSrcHome = &apos;static/images/main/home.png&apos;</span><br><span class="line">          break</span><br><span class="line">        //鹰眼人脸数据测试</span><br><span class="line">        case &apos;FaceSampleGrouping&apos;:</span><br><span class="line">          sidebar.defaultActive = &apos;6-1&apos;</span><br><span class="line">          sidebar.imgSrcHome = &apos;static/images/main/home.png&apos;</span><br><span class="line">          break</span><br><span class="line">        case &apos;FaceSampleManage&apos;:</span><br><span class="line">        case &apos;RecognitionResult&apos;:</span><br><span class="line">        case &apos;RecognitionList&apos;:</span><br><span class="line">          sidebar.defaultActive = &apos;6-2&apos;</span><br><span class="line">          sidebar.imgSrcHome = &apos;static/images/main/home.png&apos;</span><br><span class="line">          break</span><br><span class="line">        case &apos;RecognitionResultsFound&apos;:</span><br><span class="line">        //   usercenter.topMenu = &apos;&apos;</span><br><span class="line">        //   usercenter.left_menu_active = &apos;0&apos;</span><br><span class="line">        //   usercenter.top_menu_active = &apos;0&apos;</span><br><span class="line">        //   break</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>在mounted调用 此函数<br>2.在router.js 里面设置路由<br>要记得，把面包屑引入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import Templates from &apos;../views/template/Templates&apos;</span><br></pre></td></tr></table></figure></p>
+<p>在 new Router 的路由配置里面 component为 Tempaltes<br>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">      path: &apos;equipment&apos;,</span><br><span class="line">      component: Templates,</span><br><span class="line">      children: [</span><br><span class="line">          // 设备</span><br><span class="line">          &#123; path: &apos;counter&apos;, name: &apos;Counter&apos;, component: Counter &#125;,</span><br><span class="line">          &#123; path: &apos;face&apos;, name: &apos;Face&apos;, component: Face &#125;,</span><br><span class="line">          &#123; path: &apos;flow&apos;, name: &apos;Flow&apos;, component: Flow &#125;,</span><br><span class="line">          &#123; path: &apos;pallet&apos;, name: &apos;Pallet&apos;, component: Pallet &#125;,</span><br><span class="line">          &#123; path: &apos;store/:storeId&apos;, name: &apos;Store&apos;, component: Store &#125;,</span><br><span class="line">          &#123; path: &apos;device/:shopId&apos;, name: &apos;Device&apos;, component: Device &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>3.然后在 Tempaltes.vue 写要呈现的面包屑<br>主要实现方式，根据URL的地址来判断 菜单点击到哪一步，把需要的面包屑呈现出来<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div class=&quot;templates&quot;&gt;</span><br><span class="line">      &lt;!-- 导航 start --&gt;</span><br><span class="line">      &lt;div class=&quot;nav-menu&quot;&gt;</span><br><span class="line">        &lt;!-- 商家 start --&gt;</span><br><span class="line">        &lt;el-breadcrumb v-if=&quot;navMenu === &apos;BusinessList&apos;&quot; separator=&quot;/&quot;&gt;</span><br><span class="line">          &lt;el-breadcrumb-item&gt;商家&lt;/el-breadcrumb-item&gt;</span><br><span class="line">          &lt;el-breadcrumb-item&gt;商家管理&lt;/el-breadcrumb-item&gt;</span><br><span class="line">        &lt;/el-breadcrumb&gt;</span><br><span class="line"></span><br><span class="line">        &lt;el-breadcrumb v-if=&quot;navMenu === &apos;Modules&apos;&quot; separator=&quot;/&quot;&gt;</span><br><span class="line">          &lt;el-breadcrumb-item&gt;商家&lt;/el-breadcrumb-item&gt;</span><br><span class="line">          &lt;el-breadcrumb-item&gt;&lt;router-link :to=&quot;&#123; name: &apos;BusinessList&apos; &#125;&quot; replace&gt;商家管理&lt;/router-link&gt;&lt;/el-breadcrumb-item&gt;</span><br><span class="line">          &lt;el-breadcrumb-item&gt;模块&amp;nbsp;&amp;nbsp;&#123;&#123; name &#125;&#125;&lt;/el-breadcrumb-item&gt;</span><br><span class="line">        &lt;/el-breadcrumb&gt;</span><br><span class="line">        &lt;!--鹰眼人脸数据测试--&gt;</span><br><span class="line">        &lt;el-breadcrumb v-if=&quot;navMenu === &apos;FaceSampleGrouping&apos;&quot; separator=&quot;/&quot;&gt;</span><br><span class="line">          &lt;el-breadcrumb-item&gt;鹰眼人脸数据测试&lt;/el-breadcrumb-item&gt;</span><br><span class="line">          &lt;el-breadcrumb-item&gt;人脸样本分组管理&lt;/el-breadcrumb-item&gt;</span><br><span class="line">        &lt;/el-breadcrumb&gt;</span><br><span class="line">        &lt;el-breadcrumb v-if=&quot;navMenu === &apos;FaceSampleManage&apos;&quot; separator=&quot;/&quot;&gt;</span><br><span class="line">          &lt;el-breadcrumb-item&gt;鹰眼人脸数据测试&lt;/el-breadcrumb-item&gt;</span><br><span class="line">          &lt;el-breadcrumb-item&gt;</span><br><span class="line">            &lt;router-link :to=&quot;&#123; name: &apos;FaceSampleGrouping&apos; &#125;&quot; replace&gt;人脸样本分组管理&lt;/router-link&gt;</span><br><span class="line">          &lt;/el-breadcrumb-item&gt;</span><br><span class="line">          &lt;el-breadcrumb-item&gt;人脸样本管理&lt;/el-breadcrumb-item&gt;</span><br><span class="line">        &lt;/el-breadcrumb&gt;</span><br><span class="line">        &lt;el-breadcrumb v-if=&quot;navMenu === &apos;RecognitionResult&apos;&quot; separator=&quot;/&quot;&gt;</span><br><span class="line">          &lt;el-breadcrumb-item&gt;鹰眼人脸数据测试&lt;/el-breadcrumb-item&gt;</span><br><span class="line">          &lt;el-breadcrumb-item&gt;</span><br><span class="line">            &lt;router-link :to=&quot;&#123; name: &apos;FaceSampleGrouping&apos; &#125;&quot; replace&gt;人脸样本分组管理&lt;/router-link&gt;</span><br><span class="line">          &lt;/el-breadcrumb-item&gt;</span><br><span class="line">          &lt;el-breadcrumb-item&gt;</span><br><span class="line">            &lt;router-link :to=&quot;&#123; name: &apos;FaceSampleManage&apos;, params: &#123;&apos;id&apos;: id&#125;&#125;&quot; replace&gt;人脸样本管理&lt;/router-link&gt;</span><br><span class="line">          &lt;/el-breadcrumb-item&gt;</span><br><span class="line">          &lt;el-breadcrumb-item&gt;识别结果查看&lt;/el-breadcrumb-item&gt;</span><br><span class="line">        &lt;/el-breadcrumb&gt;</span><br><span class="line">        &lt;el-breadcrumb v-if=&quot;navMenu === &apos;RecognitionList&apos;&quot; separator=&quot;/&quot;&gt;</span><br><span class="line">          &lt;el-breadcrumb-item&gt;鹰眼人脸数据测试&lt;/el-breadcrumb-item&gt;</span><br><span class="line">          &lt;el-breadcrumb-item&gt;识别结果列表&lt;/el-breadcrumb-item&gt;</span><br><span class="line">        &lt;/el-breadcrumb&gt;</span><br><span class="line">        &lt;el-breadcrumb v-if=&quot;navMenu === &apos;RecognitionResultsFound&apos;&quot; separator=&quot;/&quot;&gt;</span><br><span class="line">          &lt;el-breadcrumb-item&gt;鹰眼人脸数据测试&lt;/el-breadcrumb-item&gt;</span><br><span class="line">          &lt;el-breadcrumb-item&gt;</span><br><span class="line">            &lt;router-link :to=&quot;&#123; name: &apos;RecognitionList&apos; &#125;&quot; replace&gt;识别结果列表&lt;/router-link&gt;</span><br><span class="line">          &lt;/el-breadcrumb-item&gt;</span><br><span class="line">          &lt;el-breadcrumb-item&gt;识别结果查看&lt;/el-breadcrumb-item&gt;</span><br><span class="line">        &lt;/el-breadcrumb&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">      &lt;!-- 导航 end --&gt;</span><br><span class="line">      &lt;!-- 主要内容 start --&gt;</span><br><span class="line">      &lt;div class=&quot;main&quot;&gt;</span><br><span class="line">        &lt;router-view&gt;&lt;/router-view&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">      &lt;!-- 主要内容 end --&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这里还有的点，就是 面包屑的来回跳转<br>使用包裹 router-link 进行跳转，简单的传值，直接使用重url取值再传过去<br>建议使用 storage.setLocalStorage 或者 vuex<br>4.最后就需要在你跳转的页面，进行接参，把面包屑展现出来<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">created: function () &#123;</span><br><span class="line">        // 刷新时，获取动态数据 设置navmenu</span><br><span class="line">        let templates = this.$parent</span><br><span class="line">        templates.navMenu = this.$route.name</span><br><span class="line">        templates.upperLevelMenu = &apos;&apos;</span><br><span class="line">        this.faceListAll()</span><br><span class="line"></span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2018/08/14/Vue-面包屑导航/">
+    <time datetime="2018-08-14T07:28:54.000Z" class="entry-date">
+        2018-08-14
+    </time>
+</a>
+    
+    
+    </footer>
+</article>
+
+
+
+
+
+
+  
     <article id="post-Vue-小方法-处理" class="post-Vue-小方法-处理 post type-post status-publish format-standard hentry">
     <!---->
 
@@ -76,7 +124,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/13/Vue-小方法-处理/" data-id="cjkrz6p110001dox5ddsucf3m" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/13/Vue-小方法-处理/" data-id="cjktiepol0002ccx5klujcdds" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -130,7 +178,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/11/Vue-自定义验证规则/" data-id="cjkrz6p170003dox52wyov5su" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/11/Vue-自定义验证规则/" data-id="cjktiepov0005ccx5wa3q63xi" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -202,7 +250,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/06/vue-进阶之封装全局插件/" data-id="cjkrz6p1c0005dox55tm8p8ik" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/06/vue-进阶之封装全局插件/" data-id="cjktieppe0007ccx5n3r4zxod" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -253,7 +301,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/07/25/Vue-进阶之调用电脑摄像头/" data-id="cjkrz6p0u0000dox57ekb5d70" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/07/25/Vue-进阶之调用电脑摄像头/" data-id="cjktiepof0001ccx5cbuogsdz" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -357,7 +405,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/git-使用命令-工作流/" data-id="cjkrz6p140002dox50elextyi" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/git-使用命令-工作流/" data-id="cjktiepoo0003ccx5h4lxe417" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -420,7 +468,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/搭建blog-of-second/" data-id="cjkrz6p1i0008dox5law0jhin" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/搭建blog-of-second/" data-id="cjktieppg0008ccx52qv7txbw" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -521,7 +569,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/24/我的第一篇文章/" data-id="cjkrz6p1e0006dox5laao0ffx" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/24/我的第一篇文章/" data-id="cjktieppi0009ccx5ny99fych" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -583,7 +631,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/24/搭建blog-of-first/" data-id="cjkrz6p1h0007dox57hutl68c" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/24/搭建blog-of-first/" data-id="cjktieppc0006ccx57gdm5cws" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -654,7 +702,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/23/hello-world/" data-id="cjkrz6p190004dox5tubvwkqa" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/23/hello-world/" data-id="cjktiepor0004ccx5qn50rw58" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -713,6 +761,10 @@
       <ul>
         
           <li>
+            <a href="/2018/08/14/Vue-面包屑导航/">Vue 面包屑导航</a>
+          </li>
+        
+          <li>
             <a href="/2018/08/13/Vue-小方法-处理/">Vue 小方法(处理)</a>
           </li>
         
@@ -726,10 +778,6 @@
         
           <li>
             <a href="/2018/07/25/Vue-进阶之调用电脑摄像头/">Vue 进阶之调用电脑摄像头</a>
-          </li>
-        
-          <li>
-            <a href="/2018/05/25/git-使用命令-工作流/">git 使用命令(工作流)</a>
           </li>
         
       </ul>
