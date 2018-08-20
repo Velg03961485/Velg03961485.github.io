@@ -61,6 +61,57 @@
       <div id="main" class="wrapper">
         <div id="primary" class="site-content"><div id="content" role="main">
   
+    <article id="post-angular-图片上传orientation旋转属性" class="post-angular-图片上传orientation旋转属性 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/2018/08/20/angular-图片上传orientation旋转属性/">angular 图片上传orientation旋转属性</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/20/angular-图片上传orientation旋转属性/" data-id="cjl25f0us000134x5qcboq8l1" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <p>今天讲一个以前遇到的一个懵逼问题<br>一张后台返回的图片，显示在安卓的内嵌前端页面，倒转了90度（在上传的时候保证是正的）<br>在浏览器中，查看也是正的，单独的在html查看也是正的（jpeg格式）<br>各种懵，怎么会出现在这种情况<br>了解到这是因为 图片orientation的原因，横拍的图片，正常显示，但是这个旋转<br>属性值为90，造成在安卓上显示就倒转90了<br>1.最快的解决方式，重新让UI生成一张png格式的图片就ok了<br>2.如何知道自己上传的图片orientation 不正常（上传拦截这种图片）<br>因为这种图片很少，情况不建议写大量代码就更改图片的orientation值<br>后面有更改orientation的写法<br>因为是 写在angualr项目里面的，所以以angualr为主</p>
+<p><em>1.首先了解一下orientation属性<br>旋转0度    orientation参数为1<br>旋转90度   orientation参数为6<br>旋转180度  orientation参数为3<br>旋转270度  orientation参数为8
+</em>2.这里我们用的是exif.js来获取图片的orientation值<br><a href="https://github.com/Velg03961485/exif" target="_blank" rel="noopener">https://github.com/Velg03961485/exif</a> 插件的地址<br>*3在main.js中 paths 写入插件地址<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">require.config(&#123;</span><br><span class="line">paths:&#123;</span><br><span class="line">//    查取图片的orientation属性</span><br><span class="line">        &apos;exif&apos;:&apos;assets/exif&apos;,</span><br><span class="line">&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>*4在页面的controller js里面先引入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require(&apos;exif&apos;);</span><br></pre></td></tr></table></figure></p>
+<p>*5前端页面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;col-md-12&quot;&gt;</span><br><span class="line">                    &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">                        &lt;label class=&quot;control-label col-md-2&quot;&gt;上传缩略图：&lt;/label&gt;</span><br><span class="line">                        &lt;form name=&quot;uploadForm&quot;&gt;</span><br><span class="line">                            &lt;div class=&quot;col-md-2&quot;&gt;</span><br><span class="line">                                &lt;ul style=&quot;list-style-type:none; margin:0;width:800px;&quot;&gt;</span><br><span class="line">                                    &lt;li ng-repeat=&quot;img in imgs&quot; style=&quot;width:130px;float: left;display:inline;margin-right: 10px;position:relative&quot;&gt;</span><br><span class="line">                                        &lt;img ng-src=&quot;&#123;&#123; img &#125;&#125;&quot; width=&quot;120&quot; height=&quot;120&quot; /&gt;</span><br><span class="line">                                        &lt;span class=&quot;icon-close img-close&quot; style=&apos;position:absolute;right:-2px;top:-4px;&apos; ng-click=&quot;removeImg($index)&quot;&gt;&lt;/span&gt;</span><br><span class="line">                                    &lt;/li&gt;</span><br><span class="line">                                    &lt;li ng-if=&quot;idOlder == 1&quot; ngf-select=&quot;uploadPic(file)&quot; ng-model=&quot;file&quot; name=&quot;file&quot; ngf-pattern=&quot;&apos;image/*&apos;&quot; ngf-accept=&quot;&apos;image/*&apos;&quot; ngf-max-size=&quot;20MB&quot; style=&quot;width:200px;float: left;display:inline&quot;&gt;</span><br><span class="line">                                        &lt;img style=&quot;border:1px;cursor:pointer&quot; src=&quot;css/img/updatepic.png&quot; width=&quot;120&quot; height=&quot;120&quot; alt /&gt;</span><br><span class="line">                                    &lt;/li&gt;</span><br><span class="line">                                &lt;/ul&gt;</span><br><span class="line">                            &lt;/div&gt;</span><br><span class="line">                            &lt;!--&lt;input type=&quot;hidden&quot; ng-model=&quot;pics&quot; name=&quot;pics&quot; value=&quot;&#123;&#123;pics&#125;&#125;&quot;/&gt;--&gt;</span><br><span class="line">                        &lt;/form&gt;</span><br><span class="line">                    &lt;/div&gt;</span><br><span class="line">                &lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>*6app.controller<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">//上传图片</span><br><span class="line">            $scope.selectUpload = function() &#123;</span><br><span class="line">                $scope.uploadTab.active = true;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$scope.uploadPic = function(file) &#123;</span><br><span class="line">                angular.element(document.getElementById(&apos;landmark&apos;)).css(&apos;display&apos;,&apos;block&apos;);</span><br><span class="line">                console.log(file)</span><br><span class="line">                EXIF.getData(file, function() &#123;</span><br><span class="line">                    var Orientation = EXIF.getTag(this, &apos;Orientation&apos;);</span><br><span class="line">                    if(Orientation == &apos;3&apos; || Orientation == &apos;6&apos; || Orientation == &apos;8&apos;)&#123;</span><br><span class="line">                        alert(&apos;您上传的图片有问题，建议采用PNG格式&apos;);</span><br><span class="line">                    &#125;else&#123;</span><br><span class="line">                        if(file.type == &apos;image/png&apos; || file.type == &apos;image/jpeg&apos; || file.type == &apos;image/gif&apos;)&#123;</span><br><span class="line">                            if(file.size &lt; 1*1024*1024)&#123;</span><br><span class="line">                                file.upload = Upload.upload(&#123;</span><br><span class="line">                                    url: &apos;/admin/new/uploadImage&apos;,</span><br><span class="line">                                    headers: &#123;</span><br><span class="line">                                        &apos;optional-header&apos;: &apos;header-value&apos;</span><br><span class="line">                                    &#125;,</span><br><span class="line">                                    data: &#123;</span><br><span class="line">                                        file: file</span><br><span class="line">                                    &#125;</span><br><span class="line">                                &#125;);</span><br><span class="line">                                file.upload.then(function(response) &#123;</span><br><span class="line">                                    console.log(response.statusText);</span><br><span class="line">                                    //response.statusText==&apos;OK&apos;  此状态不可用了，可能是因为更新</span><br><span class="line">                                    if(response.status== 200)&#123;</span><br><span class="line">                                        //toastr.success(&quot;图片上传成功&quot;);</span><br><span class="line">                                        $scope.imgs.push(response.data.url);</span><br><span class="line">                                        $scope.idOlder = 0;</span><br><span class="line">                                    &#125;else&#123;</span><br><span class="line">                                        toastr.error(&quot;图片上传失败&quot;);</span><br><span class="line">                                        // $scope.imgs.push(response.data.url);</span><br><span class="line">                                    &#125;</span><br><span class="line">                                    angular.element(document.getElementById(&apos;landmark&apos;)).css(&apos;display&apos;,&apos;none&apos;);</span><br><span class="line">                                    //$scope.defaultPicFile = &quot;css/img/updatepic.png&quot;;</span><br><span class="line">                                &#125;, function(response) &#123;</span><br><span class="line">                                    if(response.status &gt; 0)</span><br><span class="line">                                        $scope.errorMsg = response.status + &apos;: &apos; + response.data;</span><br><span class="line">                                &#125;, function(evt) &#123;</span><br><span class="line">                                    file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));</span><br><span class="line">                                &#125;);</span><br><span class="line">                                file.upload.xhr(function(xhr) &#123;&#125;);</span><br><span class="line">                            &#125;else&#123;</span><br><span class="line">                                alert(&apos;您选择的文件过大&apos;);</span><br><span class="line">                                angular.element(document.getElementById(&apos;landmark&apos;)).css(&apos;display&apos;,&apos;none&apos;);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;else&#123;</span><br><span class="line">                            alert(&apos;您输入的文件不合法，请选择正确文件&apos;);</span><br><span class="line">                            angular.element(document.getElementById(&apos;landmark&apos;)).css(&apos;display&apos;,&apos;none&apos;);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line"></span><br><span class="line">            &#125;;</span><br></pre></td></tr></table></figure></p>
+<p>这里分别对图片的Orientation 判断并进行拦截和限制图片大小 以及图片格式<br>angular 简单的图片获取旋转属性并进行判断 就弄好了</p>
+<p>3.对于发生旋转的图片如何去纠正，这就要使用canvas对图片进行更改了<br>CSND上面有各种解决方案，这里暂时就不先做出具体详解<br>同时还用到一个 mobileBUGFix.mini.js 插件，这里不太熟悉，只能等下期讲解</p>
+<p>后记<br>Orientation 除了这四种属性之外，还有镜像的旋转属性，有兴趣的可以了解一下<br>对于canvas生成照片以及转化base64，前面的博客有介绍，几乎概括全部的文件来回转换类型</p>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2018/08/20/angular-图片上传orientation旋转属性/">
+    <time datetime="2018-08-20T09:27:28.000Z" class="entry-date">
+        2018-08-20
+    </time>
+</a>
+    
+    
+    </footer>
+</article>
+
+
+
+
+
+
+  
     <article id="post-Vue-短信发送倒计时" class="post-Vue-短信发送倒计时 post type-post status-publish format-standard hentry">
     <!---->
 
@@ -76,7 +127,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/16/Vue-短信发送倒计时/" data-id="cjkwhv2wn0000q4x5q6cstao4" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/16/Vue-短信发送倒计时/" data-id="cjl25f0v9000534x5r18r6yqn" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -129,7 +180,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/14/Vue-面包屑导航/" data-id="cjkwhv2xg0005q4x5xvsjv696" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/14/Vue-面包屑导航/" data-id="cjl25f0vh000934x5xdc504gu" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -177,7 +228,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/13/Vue-小方法-处理/" data-id="cjkwhv2wz0001q4x5jfy4fcsx" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/13/Vue-小方法-处理/" data-id="cjl25f0um000034x5qia95c0b" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -231,7 +282,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/11/Vue-自定义验证规则/" data-id="cjkwhv2x50002q4x55wmhp7jr" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/11/Vue-自定义验证规则/" data-id="cjl25f0v3000234x57k0q0j8p" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -303,7 +354,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/06/vue-进阶之封装全局插件/" data-id="cjkwhv2xo0007q4x5g8fykndy" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/06/vue-进阶之封装全局插件/" data-id="cjl25f0vd000734x5l205x0l9" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -354,7 +405,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/07/25/Vue-进阶之调用电脑摄像头/" data-id="cjkwhv2x80003q4x5mn64ggdo" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/07/25/Vue-进阶之调用电脑摄像头/" data-id="cjl25f0v5000334x5rolcpha9" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -458,7 +509,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/git-使用命令-工作流/" data-id="cjkwhv2xc0004q4x5jabhvj5w" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/git-使用命令-工作流/" data-id="cjl25f0vb000634x5ik1mig91" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -521,7 +572,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/搭建blog-of-second/" data-id="cjkwhv2yg0009q4x5ssceudtq" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/搭建blog-of-second/" data-id="cjl25f0vf000834x5asf163hn" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -622,7 +673,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/24/我的第一篇文章/" data-id="cjkwhv2xr0008q4x5j7oknj5s" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/24/我的第一篇文章/" data-id="cjl25f0vn000b34x5llc233v7" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -677,69 +728,6 @@
 
 
   
-    <article id="post-搭建blog-of-first" class="post-搭建blog-of-first post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/24/搭建blog-of-first/" data-id="cjkwhv2yh000aq4x5qu3d5n3m" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <hr>
-<p>title: 搭建blog of first<br>date: 2018-05-24 18:57:09<br>tags:</p>
-<p>你想拥有自己的一个博客吗？<br>只要需要半天时间，你就拥有属于自己的一个博客网站<br>首先，你要具备，安装node.js、下载git、熟悉git命令、拥有github账号、注册阿里云购买域名<br>（手把手式教程）</p>
-<p>一、首先，你要在自己的电脑上拥有以上这些环境，或者安装东西<br>在自己的电脑上安装一些插件，或者环境，首先要具备终端安装的npm命令<br>npm单独下载比较麻烦，幸好，node.js里面自带这些，并且帮你安装好，轻松使用上手<br><a href="https://nodejs.org/en/" target="_blank" rel="noopener">https://nodejs.org/en/</a>  下载node.js<br>安装好后，打开终端输入<br>node -v  出现版本号<br>npm -v   出现版本号<br>恭喜你，node 你已经安装成功</p>
-<p>二、下载git<br><a href="https://git-scm.com/" target="_blank" rel="noopener">https://git-scm.com/</a>  安装，走起，简单轻松，安装完毕<br>右击查看一下，看到 Git Bash Here ，这步OK </p>
-<p>三、走到这里，你就离自己的博客还差…嗯…五分之一吧(<em>╹▽╹</em>)<br>1.在D盘，建立一个文件夹（命名blog），进入文件夹 ，右击Git Bash Here，进入Git命令<br>2.接下来就要敲命令啦，这对你来说，太简单了，只要跟着我一步一步走就行啦<br>npm install -g hexo-cli</p>
-<p>hexo init blog</p>
-<p>cd blog</p>
-<p>npm install</p>
-<p>ヾ(@^▽^@)ノ四个步骤下来，你又离成功近了一步<br>3.试试吧，先对待生成的网站，添加自己的第一笔<br>执行命令<br>hexo new “first blog of velg”   创建文本</p>
-<p>vi first blog of velg    进入文本</p>
-<p>i   在命令行编写文本内容o(￣▽￣)ｄ，随便填些内容吧，来一首三毛的诗歌更好哟</p>
-<p>Esc  编写好后，Esc一下，然后</p>
-<p>:wq  + Enter  退出编辑状态，你的第一篇blog就编写成功啦ヾ(@^▽^@)ノ<br>4.那就开始啦，走向网站的最终生成<br>执行命令<br>hexo generate  (简写 hexo g)</p>
-<p>hexo server   (简写 hexo s)</p>
-<p>5.试着在浏览器中，输入 localhost:4000<br>看到没，你刚编写的第一个blog就在里面啦</p>
-<p>四、本地是好了，可是只有放在网上才是真正的blog呀，别急，接下来就是大招了<br>1.最简单的建站，是放在github上面，可以快速搭建起来，并实时对自己的blog快速更新<br>打开github,注册自己的一个账号,(友情提示啊，千万不要用自己注册阿里云的邮箱去注册guthub，不然就有得玩了，我就深受此坑(꒦_꒦) )<br>2.在github界面，点击+ new repository<br>3.在 Repository name 填写  你的用户名.github.io  (比如,velg09361485.github.io),不要填错呀<br>4.Description 随便填一下啦<br>5.选择 Public<br>6.勾选 Initialize this repository with a README<br>7.点击 Create repository</p>
-<p>五、存放自己博客的地方已经弄好了，但是，github 有一个要求就是要用ssh 和自己的电脑创连接，才能把本地的内容传输到github上<br>1.这是有些苦逼的一步，初玩GitHub的时候，ssh秘钥差点把自己玩哭<br>2.现在自己的电脑上生成秘钥和公钥，看网络教程吧，简单是简单，中间是有很多坑的<br>3.查看自己电脑的公钥，C:\Users\Administrator.ssh ，看到文件id_rsa.pub<br>4.用记事本打开，复制一下<br>5.在GitHub / Setting 找到 SSH and GPG keys<br>6.点击 New SSH key 把复制的公钥粘贴进去  ，ok 你的GitHub就和本地创建连接了</p>
-<p>六、接下来，就要把自己的项目上传上去了<br>执行命令<br>cd blog (这里是第二个blog)</p>
-<p>hexo g</p>
-<p>cd public</p>
-<p>git init</p>
-<p>git add .</p>
-<p>git commit add origin git@——–   (你刚创的项目连接)</p>
-<p>git remote  (如果输出 origin ,说明和远程仓库已经连接成功)</p>
-<p>git pull –rebase origin master (把远程仓库的 README 文件拉下来，好多人忘了这一步，会导致接下来上传不成功的)</p>
-<p>git push -u origin master  (这次的推送，一定记得带  -u 哟，以后再推送就不用了)</p>
-<p>七、在浏览器输入，你的GitHub的项目名，（例如，velg03961485.github.io）<br>惊不惊喜(<em>^▽^</em>)，你的blog，在网上搭建成功</p>
-<p>八、后记，下一篇将会给你介绍，如何用自己的个性域名进入自己的blog网站和如何设置自己的blog封面样式</p>
-
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-    <a href="/2018/05/24/搭建blog-of-first/">
-    <time datetime="2018-05-24T11:07:32.677Z" class="entry-date">
-        2018-05-24
-    </time>
-</a>
-    
-    
-    </footer>
-</article>
-
-
-
-
-
-
-  
   
     <nav id="pagination">
       <nav id="page-nav">
@@ -769,6 +757,10 @@
       <ul>
         
           <li>
+            <a href="/2018/08/20/angular-图片上传orientation旋转属性/">angular 图片上传orientation旋转属性</a>
+          </li>
+        
+          <li>
             <a href="/2018/08/16/Vue-短信发送倒计时/">Vue 短信发送倒计时</a>
           </li>
         
@@ -782,10 +774,6 @@
         
           <li>
             <a href="/2018/08/11/Vue-自定义验证规则/">Vue 自定义验证规则</a>
-          </li>
-        
-          <li>
-            <a href="/2018/08/06/vue-进阶之封装全局插件/">vue 进阶之封装全局插件</a>
           </li>
         
       </ul>

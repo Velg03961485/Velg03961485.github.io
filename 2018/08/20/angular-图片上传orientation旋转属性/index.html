@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="今天讲一个以前遇到的一个懵逼问题一张后台返回的图片，显示在安卓的内嵌前端页面，倒转了90度（在上传的时候保证是正的）在浏览器中，查看也是正的，单独的在html查看也是正的（jpeg格式）各种懵，怎么会出现在这种情况了解到这是因为 图片orientation的原因，横拍的图片，正常显示，但是这个旋转属" />
+  
+
+  
+  
+  
+  
+  
+  
+  <title>angular 图片上传orientation旋转属性 | Velg 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="今天讲一个以前遇到的一个懵逼问题一张后台返回的图片，显示在安卓的内嵌前端页面，倒转了90度（在上传的时候保证是正的）在浏览器中，查看也是正的，单独的在html查看也是正的（jpeg格式）各种懵，怎么会出现在这种情况了解到这是因为 图片orientation的原因，横拍的图片，正常显示，但是这个旋转属性值为90，造成在安卓上显示就倒转90了1.最快的解决方式，重新让UI生成一张png格式的图片就ok">
+<meta property="og:type" content="article">
+<meta property="og:title" content="angular 图片上传orientation旋转属性">
+<meta property="og:url" content="http://yoursite.com/2018/08/20/angular-图片上传orientation旋转属性/index.html">
+<meta property="og:site_name" content="Velg 的博客">
+<meta property="og:description" content="今天讲一个以前遇到的一个懵逼问题一张后台返回的图片，显示在安卓的内嵌前端页面，倒转了90度（在上传的时候保证是正的）在浏览器中，查看也是正的，单独的在html查看也是正的（jpeg格式）各种懵，怎么会出现在这种情况了解到这是因为 图片orientation的原因，横拍的图片，正常显示，但是这个旋转属性值为90，造成在安卓上显示就倒转90了1.最快的解决方式，重新让UI生成一张png格式的图片就ok">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-20T10:39:01.204Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="angular 图片上传orientation旋转属性">
+<meta name="twitter:description" content="今天讲一个以前遇到的一个懵逼问题一张后台返回的图片，显示在安卓的内嵌前端页面，倒转了90度（在上传的时候保证是正的）在浏览器中，查看也是正的，单独的在html查看也是正的（jpeg格式）各种懵，怎么会出现在这种情况了解到这是因为 图片orientation的原因，横拍的图片，正常显示，但是这个旋转属性值为90，造成在安卓上显示就倒转90了1.最快的解决方式，重新让UI生成一张png格式的图片就ok">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src='//push.zhanzhang.baidu.com/push.js'></script>
+</head>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Velg 的博客" rel="home">Velg 的博客</a>
+      </h1>
+      
+        <script type="text/javascript" src="http://api.hitokoto.us/rand?encode=js&charset=utf-8"></script>
+        <h2 class="site-description"><script>hitokoto();</script></h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/archives">Archives</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-angular-图片上传orientation旋转属性" class="post-angular-图片上传orientation旋转属性 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      angular 图片上传orientation旋转属性
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/20/angular-图片上传orientation旋转属性/" data-id="cjl25f0us000134x5qcboq8l1" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <p>今天讲一个以前遇到的一个懵逼问题<br>一张后台返回的图片，显示在安卓的内嵌前端页面，倒转了90度（在上传的时候保证是正的）<br>在浏览器中，查看也是正的，单独的在html查看也是正的（jpeg格式）<br>各种懵，怎么会出现在这种情况<br>了解到这是因为 图片orientation的原因，横拍的图片，正常显示，但是这个旋转<br>属性值为90，造成在安卓上显示就倒转90了<br>1.最快的解决方式，重新让UI生成一张png格式的图片就ok了<br>2.如何知道自己上传的图片orientation 不正常（上传拦截这种图片）<br>因为这种图片很少，情况不建议写大量代码就更改图片的orientation值<br>后面有更改orientation的写法<br>因为是 写在angualr项目里面的，所以以angualr为主</p>
+<p><em>1.首先了解一下orientation属性<br>旋转0度    orientation参数为1<br>旋转90度   orientation参数为6<br>旋转180度  orientation参数为3<br>旋转270度  orientation参数为8
+</em>2.这里我们用的是exif.js来获取图片的orientation值<br><a href="https://github.com/Velg03961485/exif" target="_blank" rel="noopener">https://github.com/Velg03961485/exif</a> 插件的地址<br>*3在main.js中 paths 写入插件地址<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">require.config(&#123;</span><br><span class="line">paths:&#123;</span><br><span class="line">//    查取图片的orientation属性</span><br><span class="line">        &apos;exif&apos;:&apos;assets/exif&apos;,</span><br><span class="line">&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>*4在页面的controller js里面先引入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require(&apos;exif&apos;);</span><br></pre></td></tr></table></figure></p>
+<p>*5前端页面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;col-md-12&quot;&gt;</span><br><span class="line">                    &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">                        &lt;label class=&quot;control-label col-md-2&quot;&gt;上传缩略图：&lt;/label&gt;</span><br><span class="line">                        &lt;form name=&quot;uploadForm&quot;&gt;</span><br><span class="line">                            &lt;div class=&quot;col-md-2&quot;&gt;</span><br><span class="line">                                &lt;ul style=&quot;list-style-type:none; margin:0;width:800px;&quot;&gt;</span><br><span class="line">                                    &lt;li ng-repeat=&quot;img in imgs&quot; style=&quot;width:130px;float: left;display:inline;margin-right: 10px;position:relative&quot;&gt;</span><br><span class="line">                                        &lt;img ng-src=&quot;&#123;&#123; img &#125;&#125;&quot; width=&quot;120&quot; height=&quot;120&quot; /&gt;</span><br><span class="line">                                        &lt;span class=&quot;icon-close img-close&quot; style=&apos;position:absolute;right:-2px;top:-4px;&apos; ng-click=&quot;removeImg($index)&quot;&gt;&lt;/span&gt;</span><br><span class="line">                                    &lt;/li&gt;</span><br><span class="line">                                    &lt;li ng-if=&quot;idOlder == 1&quot; ngf-select=&quot;uploadPic(file)&quot; ng-model=&quot;file&quot; name=&quot;file&quot; ngf-pattern=&quot;&apos;image/*&apos;&quot; ngf-accept=&quot;&apos;image/*&apos;&quot; ngf-max-size=&quot;20MB&quot; style=&quot;width:200px;float: left;display:inline&quot;&gt;</span><br><span class="line">                                        &lt;img style=&quot;border:1px;cursor:pointer&quot; src=&quot;css/img/updatepic.png&quot; width=&quot;120&quot; height=&quot;120&quot; alt /&gt;</span><br><span class="line">                                    &lt;/li&gt;</span><br><span class="line">                                &lt;/ul&gt;</span><br><span class="line">                            &lt;/div&gt;</span><br><span class="line">                            &lt;!--&lt;input type=&quot;hidden&quot; ng-model=&quot;pics&quot; name=&quot;pics&quot; value=&quot;&#123;&#123;pics&#125;&#125;&quot;/&gt;--&gt;</span><br><span class="line">                        &lt;/form&gt;</span><br><span class="line">                    &lt;/div&gt;</span><br><span class="line">                &lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>*6app.controller<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">//上传图片</span><br><span class="line">            $scope.selectUpload = function() &#123;</span><br><span class="line">                $scope.uploadTab.active = true;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$scope.uploadPic = function(file) &#123;</span><br><span class="line">                angular.element(document.getElementById(&apos;landmark&apos;)).css(&apos;display&apos;,&apos;block&apos;);</span><br><span class="line">                console.log(file)</span><br><span class="line">                EXIF.getData(file, function() &#123;</span><br><span class="line">                    var Orientation = EXIF.getTag(this, &apos;Orientation&apos;);</span><br><span class="line">                    if(Orientation == &apos;3&apos; || Orientation == &apos;6&apos; || Orientation == &apos;8&apos;)&#123;</span><br><span class="line">                        alert(&apos;您上传的图片有问题，建议采用PNG格式&apos;);</span><br><span class="line">                    &#125;else&#123;</span><br><span class="line">                        if(file.type == &apos;image/png&apos; || file.type == &apos;image/jpeg&apos; || file.type == &apos;image/gif&apos;)&#123;</span><br><span class="line">                            if(file.size &lt; 1*1024*1024)&#123;</span><br><span class="line">                                file.upload = Upload.upload(&#123;</span><br><span class="line">                                    url: &apos;/admin/new/uploadImage&apos;,</span><br><span class="line">                                    headers: &#123;</span><br><span class="line">                                        &apos;optional-header&apos;: &apos;header-value&apos;</span><br><span class="line">                                    &#125;,</span><br><span class="line">                                    data: &#123;</span><br><span class="line">                                        file: file</span><br><span class="line">                                    &#125;</span><br><span class="line">                                &#125;);</span><br><span class="line">                                file.upload.then(function(response) &#123;</span><br><span class="line">                                    console.log(response.statusText);</span><br><span class="line">                                    //response.statusText==&apos;OK&apos;  此状态不可用了，可能是因为更新</span><br><span class="line">                                    if(response.status== 200)&#123;</span><br><span class="line">                                        //toastr.success(&quot;图片上传成功&quot;);</span><br><span class="line">                                        $scope.imgs.push(response.data.url);</span><br><span class="line">                                        $scope.idOlder = 0;</span><br><span class="line">                                    &#125;else&#123;</span><br><span class="line">                                        toastr.error(&quot;图片上传失败&quot;);</span><br><span class="line">                                        // $scope.imgs.push(response.data.url);</span><br><span class="line">                                    &#125;</span><br><span class="line">                                    angular.element(document.getElementById(&apos;landmark&apos;)).css(&apos;display&apos;,&apos;none&apos;);</span><br><span class="line">                                    //$scope.defaultPicFile = &quot;css/img/updatepic.png&quot;;</span><br><span class="line">                                &#125;, function(response) &#123;</span><br><span class="line">                                    if(response.status &gt; 0)</span><br><span class="line">                                        $scope.errorMsg = response.status + &apos;: &apos; + response.data;</span><br><span class="line">                                &#125;, function(evt) &#123;</span><br><span class="line">                                    file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));</span><br><span class="line">                                &#125;);</span><br><span class="line">                                file.upload.xhr(function(xhr) &#123;&#125;);</span><br><span class="line">                            &#125;else&#123;</span><br><span class="line">                                alert(&apos;您选择的文件过大&apos;);</span><br><span class="line">                                angular.element(document.getElementById(&apos;landmark&apos;)).css(&apos;display&apos;,&apos;none&apos;);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;else&#123;</span><br><span class="line">                            alert(&apos;您输入的文件不合法，请选择正确文件&apos;);</span><br><span class="line">                            angular.element(document.getElementById(&apos;landmark&apos;)).css(&apos;display&apos;,&apos;none&apos;);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line"></span><br><span class="line">            &#125;;</span><br></pre></td></tr></table></figure></p>
+<p>这里分别对图片的Orientation 判断并进行拦截和限制图片大小 以及图片格式<br>angular 简单的图片获取旋转属性并进行判断 就弄好了</p>
+<p>3.对于发生旋转的图片如何去纠正，这就要使用canvas对图片进行更改了<br>CSND上面有各种解决方案，这里暂时就不先做出具体详解<br>同时还用到一个 mobileBUGFix.mini.js 插件，这里不太熟悉，只能等下期讲解</p>
+<p>后记<br>Orientation 除了这四种属性之外，还有镜像的旋转属性，有兴趣的可以了解一下<br>对于canvas生成照片以及转化base64，前面的博客有介绍，几乎概括全部的文件来回转换类型</p>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2018/08/20/angular-图片上传orientation旋转属性/">
+    <time datetime="2018-08-20T09:27:28.000Z" class="entry-date">
+        2018-08-20
+    </time>
+</a>
+    
+    
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+    
+        <span class="nav-next"><a href="/2018/08/16/Vue-短信发送倒计时/" rel="next">Vue 短信发送倒计时 <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="s" id="s" />
+        <input type="submit" id="searchsubmit" value="搜索" />
+    </div>
+</form></aside>
+  
+    
+  
+    
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/20/angular-图片上传orientation旋转属性/">angular 图片上传orientation旋转属性</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/16/Vue-短信发送倒计时/">Vue 短信发送倒计时</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/14/Vue-面包屑导航/">Vue 面包屑导航</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/13/Vue-小方法-处理/">Vue 小方法(处理)</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/11/Vue-自定义验证规则/">Vue 自定义验证规则</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  
+    
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2018 刘大旭
+    All rights reserved.</p>
+    <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
+</footer>
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>
