@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="这里主要是记录一下使用Vue的小方法（element下）1.默认勾选-2.保存的富文本过滤标签以及转化文本-3.登录监听-4.本地模拟编译-5.表格label如何居中
+1.默认勾选使用element的表格（带有勾选的），查看已经勾选状态，后台返回的数据前端要有默认勾选的element 有专用的默认勾" />
+  
+
+  
+  
+  
+  
+  
+  
+  <title>Vue 小方法2 | Velg 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="这里主要是记录一下使用Vue的小方法（element下）1.默认勾选-2.保存的富文本过滤标签以及转化文本-3.登录监听-4.本地模拟编译-5.表格label如何居中 1.默认勾选使用element的表格（带有勾选的），查看已经勾选状态，后台返回的数据前端要有默认勾选的element 有专用的默认勾选方法 toggleRowSelection刚开始的时候在请求数据返回的之后，写上1this.$re">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue 小方法2">
+<meta property="og:url" content="http://yoursite.com/2018/08/24/Vue-小方法2/index.html">
+<meta property="og:site_name" content="Velg 的博客">
+<meta property="og:description" content="这里主要是记录一下使用Vue的小方法（element下）1.默认勾选-2.保存的富文本过滤标签以及转化文本-3.登录监听-4.本地模拟编译-5.表格label如何居中 1.默认勾选使用element的表格（带有勾选的），查看已经勾选状态，后台返回的数据前端要有默认勾选的element 有专用的默认勾选方法 toggleRowSelection刚开始的时候在请求数据返回的之后，写上1this.$re">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-24T08:06:55.971Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue 小方法2">
+<meta name="twitter:description" content="这里主要是记录一下使用Vue的小方法（element下）1.默认勾选-2.保存的富文本过滤标签以及转化文本-3.登录监听-4.本地模拟编译-5.表格label如何居中 1.默认勾选使用element的表格（带有勾选的），查看已经勾选状态，后台返回的数据前端要有默认勾选的element 有专用的默认勾选方法 toggleRowSelection刚开始的时候在请求数据返回的之后，写上1this.$re">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src='//push.zhanzhang.baidu.com/push.js'></script>
+</head>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Velg 的博客" rel="home">Velg 的博客</a>
+      </h1>
+      
+        <script type="text/javascript" src="http://api.hitokoto.us/rand?encode=js&charset=utf-8"></script>
+        <h2 class="site-description"><script>hitokoto();</script></h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/archives">Archives</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-Vue-小方法2" class="post-Vue-小方法2 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      Vue 小方法2
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/24/Vue-小方法2/" data-id="cjl7pqgm300011ox5ypjod0w1" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <p>这里主要是记录一下使用Vue的小方法（element下）<br>1.默认勾选-2.保存的富文本过滤标签以及转化文本-3.登录监听-4.本地模拟编译-5.表格label如何居中</p>
+<p>1.默认勾选<br>使用element的表格（带有勾选的），查看已经勾选状态，后台返回的数据<br>前端要有默认勾选的<br>element 有专用的默认勾选方法 toggleRowSelection<br>刚开始的时候在请求数据返回的之后，写上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.$refs.table.toggleRowSelection(this.tableData3[this.$data.index],true);</span><br></pre></td></tr></table></figure></p>
+<p>报错 toggleRowSelection undfined<br>十分纳闷，element官网给的方法，为什么会报错找不到<br>一层一层打印输出<br>console.log(this.$refs)<br>console.log(this.$refs.table)<br>console.log(this.$refs.table.toggleRowSelection)<br>发现在this.$refs.table里面toggleRowSelection方法存在<br>但是一输出 this.$refs.table.toggleRowSelection 方法就找不到了<br>备注：这里 table 指向的是 el-table ref=”table” 不要自己定义了但是没有换</p>
+<p>这种事情怎么会发生？上一级有下面函数就丢了</p>
+<p>我的返回数据函数，是在 created函数里面调用的，一进页面就触发<br>突然想到了，是不是生命周期的问题，是在是新手对Vue的各种触发函数（生命周期）不熟<br>试了一下，不在数据返回后直接调取勾选，而采用间接调用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">checked()&#123;</span><br><span class="line">          //首先el-table添加ref=&quot;table&quot;引用标识</span><br><span class="line">          this.$refs.table.toggleRowSelection(this.tableData3[this.$data.index],true);</span><br><span class="line">        &#125;,</span><br></pre></td></tr></table></figure></p>
+<p>methods 函数<br>然后在数据获取之后再调用 checked方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">this.$nextTick(function()&#123;</span><br><span class="line">                this.checked();//每次更新了数据，触发这个函数即可。</span><br><span class="line">              &#125;)</span><br></pre></td></tr></table></figure></p>
+<p>完美解决问题</p>
+<p>2.保存的富文本过滤标签以及转化文本</p>
+<p>使用富文本添加数据，展现列表，会把content内容返回到列表里面<br>但是由于你编辑的内容过多，不能全部展现在列表里面，同时展现的时候，后台给你返回的数据是带有标签的（标签是不能让后台过滤的，存储的标签是你文档编辑的格式，后台是不能给你删除的）<br>为了方便一些，这里封装了一个过滤函数，在列表展现的时候，过滤标签和限制文本长度<br>其余部分以…显示<br>首先在 vue 的filter index.js 里面 创建过滤函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//文本过滤长度以及标签 </span><br><span class="line">export const fontFilter = (value,num) =&gt;&#123;</span><br><span class="line">  value = value.replace(/&lt;[^&gt;]+&gt;/gim, &apos;&apos;);</span><br><span class="line">  value = value.substr(0, num)</span><br><span class="line">  return value + (&apos;...&apos;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后在 main.js里面 把函数设置为全局<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vue.filter(&apos;fonts&apos;,filters.fontFilter)</span><br></pre></td></tr></table></figure></p>
+<p>过滤的函数具体使用以及介绍，在前面的博客有</p>
+<p>接着在列表里面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">item.content | fonts(10)</span><br></pre></td></tr></table></figure></p>
+<p>这里传入的 10 是截取的文本长度</p>
+<p>列表有了，查看和修改就少不了<br>修改还好，你只要把获取的数据重新填回富文本就好了（这里就显示出来后台不能删标签的作用了），文本编辑的样式会重现出来</p>
+<p>但是查看，你不能还填回富文本里面吧<br>后台返回的是一串带标签的字符串，这怎么展示啊<br>使用div包裹数据，同时使用html编译，自动生成前端文本<br>这里element有自带的方法<br>v-html 太好用了，直接转化标签为文本模式，同时样式还保留着<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-html=&quot;checkForm.content&quot;&gt;checkForm.content&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>尤其一些富文本插件，上传的图片是base64的</p>
+<p>3.监听登录</p>
+<p>在input 监听enter键登录<br>原生标签下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input placeholder=&quot;请输入密码&quot; type=&quot;password&quot; @keyup.enter=&quot;login&quot;&gt;</span><br></pre></td></tr></table></figure></p>
+<p>element 下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-input type=&quot;password&quot; v-model=&quot;loginInfo.password&quot; auto-complete=&quot;off&quot; @keyup.enter.native=&quot;login&quot; placeholder=&quot;密码&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>监听在输入密码的input监听keyup事件，加enter修饰符。如果input是组件(element)，要加上.native修饰符</p>
+<p>同时在vue文档里面 对监听事件有详细的介绍：<br>在监听原生 DOM 事件时，方法以事件为唯一的参数。如果使用内联语句，语句可以访问一个 $event 属性：v-on:click=”handle(‘ok’, $event)”。</p>
+<p>.stop - 调用 event.stopPropagation()。<br>.prevent - 调用 event.preventDefault()。<br>.capture - 添加事件侦听器时使用 capture 模式。<br>.self - 只当事件是从侦听器绑定的元素本身触发时才触发回调。<br>.{keyCode | keyAlias} - 只当事件是从特定键触发时才触发回调。<br>.native - 监听组件根元素的原生事件。<br>.once - 只触发一次回调。<br>.left - (2.2.0) 只当点击鼠标左键时触发。<br>.right - (2.2.0) 只当点击鼠标右键时触发。<br>.middle - (2.2.0) 只当点击鼠标中键时触发。<br>.passive - (2.3.0) 以 { passive: true } 模式添加侦听器</p>
+<p>4.本地模拟编译<br>vue npm run dev 运行项目的时候在开发模式是可以的</p>
+<p>但是线上是需要编译的，前端为了模拟一下编译环境，是可以直接执行下面的方法的</p>
+<p>首先，你要安装一个anywhere 这个会自动在你本地生成一个服务环境<br>当你运行编译的时候，能直接把项目启动起来</p>
+<p>终端  npm install anywhere -g 安装anywhere<br>项目下 npm run build  编译完后项目会出现一个 dist文件夹<br>在文件内 执行命令 anywhere 就可以了</p>
+<p>5.表格label如何居中</p>
+<p>在使用element的模板的时候，el-table-column 标签里面的 是左对齐的<br>为了样式美化，都是居中的<br>这里不要想着覆盖样式，element有自带的 居中 align=”center”<br>如果这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-table-column</span><br><span class="line">      label=&quot;编号&quot; width=&quot;50&quot; align=&quot;center&quot;</span><br><span class="line">    &gt;</span><br><span class="line">      &lt;template slot-scope=&quot;scope&quot;&gt;scope.row.customer_id &lt;/template&gt;</span><br><span class="line">    &lt;/el-table-column&gt;</span><br></pre></td></tr></table></figure></p>
+<p>那就在 el-table 定义style 居中就行了</p>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2018/08/24/Vue-小方法2/">
+    <time datetime="2018-08-24T05:04:20.000Z" class="entry-date">
+        2018-08-24
+    </time>
+</a>
+    
+    
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+    
+        <span class="nav-next"><a href="/2018/08/24/点击粘贴复制文本/" rel="next">点击粘贴复制文本 <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="s" id="s" />
+        <input type="submit" id="searchsubmit" value="搜索" />
+    </div>
+</form></aside>
+  
+    
+  
+    
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/24/Vue-小方法2/">Vue 小方法2</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/24/点击粘贴复制文本/">点击粘贴复制文本</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/20/angular-图片上传orientation旋转属性/">angular 图片上传orientation旋转属性</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/16/Vue-短信发送倒计时/">Vue 短信发送倒计时</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/14/Vue-面包屑导航/">Vue 面包屑导航</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  
+    
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2018 刘大旭
+    All rights reserved.</p>
+    <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
+</footer>
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>

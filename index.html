@@ -61,6 +61,77 @@
       <div id="main" class="wrapper">
         <div id="primary" class="site-content"><div id="content" role="main">
   
+    <article id="post-Vue-小方法2" class="post-Vue-小方法2 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/2018/08/24/Vue-小方法2/">Vue 小方法2</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/24/Vue-小方法2/" data-id="cjl7pqgm300011ox5ypjod0w1" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <p>这里主要是记录一下使用Vue的小方法（element下）<br>1.默认勾选-2.保存的富文本过滤标签以及转化文本-3.登录监听-4.本地模拟编译-5.表格label如何居中</p>
+<p>1.默认勾选<br>使用element的表格（带有勾选的），查看已经勾选状态，后台返回的数据<br>前端要有默认勾选的<br>element 有专用的默认勾选方法 toggleRowSelection<br>刚开始的时候在请求数据返回的之后，写上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.$refs.table.toggleRowSelection(this.tableData3[this.$data.index],true);</span><br></pre></td></tr></table></figure></p>
+<p>报错 toggleRowSelection undfined<br>十分纳闷，element官网给的方法，为什么会报错找不到<br>一层一层打印输出<br>console.log(this.$refs)<br>console.log(this.$refs.table)<br>console.log(this.$refs.table.toggleRowSelection)<br>发现在this.$refs.table里面toggleRowSelection方法存在<br>但是一输出 this.$refs.table.toggleRowSelection 方法就找不到了<br>备注：这里 table 指向的是 el-table ref=”table” 不要自己定义了但是没有换</p>
+<p>这种事情怎么会发生？上一级有下面函数就丢了</p>
+<p>我的返回数据函数，是在 created函数里面调用的，一进页面就触发<br>突然想到了，是不是生命周期的问题，是在是新手对Vue的各种触发函数（生命周期）不熟<br>试了一下，不在数据返回后直接调取勾选，而采用间接调用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">checked()&#123;</span><br><span class="line">          //首先el-table添加ref=&quot;table&quot;引用标识</span><br><span class="line">          this.$refs.table.toggleRowSelection(this.tableData3[this.$data.index],true);</span><br><span class="line">        &#125;,</span><br></pre></td></tr></table></figure></p>
+<p>methods 函数<br>然后在数据获取之后再调用 checked方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">this.$nextTick(function()&#123;</span><br><span class="line">                this.checked();//每次更新了数据，触发这个函数即可。</span><br><span class="line">              &#125;)</span><br></pre></td></tr></table></figure></p>
+<p>完美解决问题</p>
+<p>2.保存的富文本过滤标签以及转化文本</p>
+<p>使用富文本添加数据，展现列表，会把content内容返回到列表里面<br>但是由于你编辑的内容过多，不能全部展现在列表里面，同时展现的时候，后台给你返回的数据是带有标签的（标签是不能让后台过滤的，存储的标签是你文档编辑的格式，后台是不能给你删除的）<br>为了方便一些，这里封装了一个过滤函数，在列表展现的时候，过滤标签和限制文本长度<br>其余部分以…显示<br>首先在 vue 的filter index.js 里面 创建过滤函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//文本过滤长度以及标签 </span><br><span class="line">export const fontFilter = (value,num) =&gt;&#123;</span><br><span class="line">  value = value.replace(/&lt;[^&gt;]+&gt;/gim, &apos;&apos;);</span><br><span class="line">  value = value.substr(0, num)</span><br><span class="line">  return value + (&apos;...&apos;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后在 main.js里面 把函数设置为全局<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vue.filter(&apos;fonts&apos;,filters.fontFilter)</span><br></pre></td></tr></table></figure></p>
+<p>过滤的函数具体使用以及介绍，在前面的博客有</p>
+<p>接着在列表里面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">item.content | fonts(10)</span><br></pre></td></tr></table></figure></p>
+<p>这里传入的 10 是截取的文本长度</p>
+<p>列表有了，查看和修改就少不了<br>修改还好，你只要把获取的数据重新填回富文本就好了（这里就显示出来后台不能删标签的作用了），文本编辑的样式会重现出来</p>
+<p>但是查看，你不能还填回富文本里面吧<br>后台返回的是一串带标签的字符串，这怎么展示啊<br>使用div包裹数据，同时使用html编译，自动生成前端文本<br>这里element有自带的方法<br>v-html 太好用了，直接转化标签为文本模式，同时样式还保留着<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-html=&quot;checkForm.content&quot;&gt;checkForm.content&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>尤其一些富文本插件，上传的图片是base64的</p>
+<p>3.监听登录</p>
+<p>在input 监听enter键登录<br>原生标签下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input placeholder=&quot;请输入密码&quot; type=&quot;password&quot; @keyup.enter=&quot;login&quot;&gt;</span><br></pre></td></tr></table></figure></p>
+<p>element 下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-input type=&quot;password&quot; v-model=&quot;loginInfo.password&quot; auto-complete=&quot;off&quot; @keyup.enter.native=&quot;login&quot; placeholder=&quot;密码&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>监听在输入密码的input监听keyup事件，加enter修饰符。如果input是组件(element)，要加上.native修饰符</p>
+<p>同时在vue文档里面 对监听事件有详细的介绍：<br>在监听原生 DOM 事件时，方法以事件为唯一的参数。如果使用内联语句，语句可以访问一个 $event 属性：v-on:click=”handle(‘ok’, $event)”。</p>
+<p>.stop - 调用 event.stopPropagation()。<br>.prevent - 调用 event.preventDefault()。<br>.capture - 添加事件侦听器时使用 capture 模式。<br>.self - 只当事件是从侦听器绑定的元素本身触发时才触发回调。<br>.{keyCode | keyAlias} - 只当事件是从特定键触发时才触发回调。<br>.native - 监听组件根元素的原生事件。<br>.once - 只触发一次回调。<br>.left - (2.2.0) 只当点击鼠标左键时触发。<br>.right - (2.2.0) 只当点击鼠标右键时触发。<br>.middle - (2.2.0) 只当点击鼠标中键时触发。<br>.passive - (2.3.0) 以 { passive: true } 模式添加侦听器</p>
+<p>4.本地模拟编译<br>vue npm run dev 运行项目的时候在开发模式是可以的</p>
+<p>但是线上是需要编译的，前端为了模拟一下编译环境，是可以直接执行下面的方法的</p>
+<p>首先，你要安装一个anywhere 这个会自动在你本地生成一个服务环境<br>当你运行编译的时候，能直接把项目启动起来</p>
+<p>终端  npm install anywhere -g 安装anywhere<br>项目下 npm run build  编译完后项目会出现一个 dist文件夹<br>在文件内 执行命令 anywhere 就可以了</p>
+<p>5.表格label如何居中</p>
+<p>在使用element的模板的时候，el-table-column 标签里面的 是左对齐的<br>为了样式美化，都是居中的<br>这里不要想着覆盖样式，element有自带的 居中 align=”center”<br>如果这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-table-column</span><br><span class="line">      label=&quot;编号&quot; width=&quot;50&quot; align=&quot;center&quot;</span><br><span class="line">    &gt;</span><br><span class="line">      &lt;template slot-scope=&quot;scope&quot;&gt;scope.row.customer_id &lt;/template&gt;</span><br><span class="line">    &lt;/el-table-column&gt;</span><br></pre></td></tr></table></figure></p>
+<p>那就在 el-table 定义style 居中就行了</p>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2018/08/24/Vue-小方法2/">
+    <time datetime="2018-08-24T05:04:20.000Z" class="entry-date">
+        2018-08-24
+    </time>
+</a>
+    
+    
+    </footer>
+</article>
+
+
+
+
+
+
+  
     <article id="post-点击粘贴复制文本" class="post-点击粘贴复制文本 post type-post status-publish format-standard hentry">
     <!---->
 
@@ -76,7 +147,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/24/点击粘贴复制文本/" data-id="cjl7isdh70008p0x51n6ji508" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/24/点击粘贴复制文本/" data-id="cjl7pqgnt000c1ox5ut773t3b" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -125,7 +196,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/20/angular-图片上传orientation旋转属性/" data-id="cjl7isdh10005p0x599yzngs9" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/20/angular-图片上传orientation旋转属性/" data-id="cjl7pqgne00071ox5kyp707tb" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -176,7 +247,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/16/Vue-短信发送倒计时/" data-id="cjl7isdgv0002p0x5hsv9ht8c" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/16/Vue-短信发送倒计时/" data-id="cjl7pqgm700021ox5ewb0ev5s" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -229,7 +300,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/14/Vue-面包屑导航/" data-id="cjl7isdgz0004p0x568m0ug44" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/14/Vue-面包屑导航/" data-id="cjl7pqgnc00061ox595x56hxr" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -277,7 +348,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/13/Vue-小方法-处理/" data-id="cjl7isdgl0000p0x519pt4ppc" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/13/Vue-小方法-处理/" data-id="cjl7pqglw00001ox5j67khwuw" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -331,7 +402,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/11/Vue-自定义验证规则/" data-id="cjl7isdgs0001p0x5q8rgqbtx" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/11/Vue-自定义验证规则/" data-id="cjl7pqgn900041ox5m71mzgmk" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -403,7 +474,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/06/vue-进阶之封装全局插件/" data-id="cjl7isdhm000bp0x57wa1hvk0" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/06/vue-进阶之封装全局插件/" data-id="cjl7pqgng00081ox53a9ybon4" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -454,7 +525,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/07/25/Vue-进阶之调用电脑摄像头/" data-id="cjl7isdgx0003p0x5f4zfa7mf" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/07/25/Vue-进阶之调用电脑摄像头/" data-id="cjl7pqgn600031ox5la6jhgu0" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -558,7 +629,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/git-使用命令-工作流/" data-id="cjl7isdh30006p0x580glhzit" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/git-使用命令-工作流/" data-id="cjl7pqgna00051ox5l2cuxp9h" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -606,115 +677,6 @@
 
 
   
-    <article id="post-搭建blog-of-second" class="post-搭建blog-of-second post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        
-  
-    <h1 class="entry-title">
-      <a class="article-title" href="/2018/05/25/搭建blog-of-second/">搭建blog of second</a>
-    </h1>
-  
-
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/搭建blog-of-second/" data-id="cjl7isdhn000cp0x5h1dbfv45" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <p>(<em>^▽^</em>)上次讲解的搭建blog，大家很容易上手了吧</p>
-<p>但是hexo自带的页面，好丑啊，而且输入的地址也是github的，一点也不NG<br>没关系，这篇blog，将会给大家讲解一下，如何安装自己喜欢的blog主题<br>和设置自己的专属域名</p>
-<p>先来安装主题吧，这个才是自己网站炫酷的起点</p>
-<p><a href="https://github.com/Velg03961485/hexo-theme-cyanstyle.git" target="_blank" rel="noopener">https://github.com/Velg03961485/hexo-theme-cyanstyle.git</a></p>
-<p><a href="https://github.com/Velg03961485/hexo-theme-landfarz.git" target="_blank" rel="noopener">https://github.com/Velg03961485/hexo-theme-landfarz.git</a></p>
-<p>这是我github 中，叉的人家的主题，感觉还是不错的</p>
-<p>要是想要更多炫酷的主题，你可以知乎上找一下</p>
-<p><a href="https://www.zhihu.com/question/24422335" target="_blank" rel="noopener">https://www.zhihu.com/question/24422335</a></p>
-<p>这个话题的小伙伴，整理很多炫酷的主题，除此之外，官网也给出了很多</p>
-<p><a href="https://hexo.io/zh-cn/docs/themes.html" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/themes.html</a></p>
-<p>好了，接下来开始安装自己的主题吧</p>
-<p>一、下载安装主题<br>敲命令</p>
-<p>cd blog/themes/</p>
-<p>git clone <a href="https://github.com/Velg03961485/hexo-theme-cyanstyle.git" target="_blank" rel="noopener">https://github.com/Velg03961485/hexo-theme-cyanstyle.git</a></p>
-<p>下载完成之后，你可以把，这个主题的文件名字修改一下，我改为了，canystyle</p>
-<p>cd ../</p>
-<p>用记事本，打开blog下面的 _config.yml</p>
-<p>查询 theme,更改为  canystyle</p>
-<p>敲命令</p>
-<p>hexo g   把主题生成成功</p>
-<p>hexo s    启本地服务，localhost:4000</p>
-<p>输入地址进去看看，是不是你本地的blog的主题已经换掉啦ヾ(@^▽^@)ノ</p>
-<p>ctrl + c  退出本地服务</p>
-<p>二、接下来就是要更新要线上了<br>在此之前一定要把刚才clone 下来的主题文件的 .git给删掉啊，不然，你自己的git是会识别错乱的</p>
-<p>敲命令走起 O(∩_∩)O哈哈~</p>
-<p>cd themes/cyanstyle/</p>
-<p>ls</p>
-<p>rm -rf .git   删除文件的命令一定要小心┌(。Д。)┐，继续走起</p>
-<p>cd ../../</p>
-<p>cd public/</p>
-<p>git status</p>
-<p>git add .</p>
-<p>git commit -m “change my theme”</p>
-<p>git push</p>
-<p>显示上传成功，这还没有完成呢</p>
-<p>接下来要在远程仓库，再进行一次主题编译,继续敲</p>
-<p>hexo g</p>
-<p>打开你的线上地址，(<em>^▽^</em>)，是不是主题已经给换掉了</p>
-<p>三、接下来就是最后一个NG操作了</p>
-<p>1.打开自己的阿里云控制台</p>
-<p>2.点击控制台</p>
-<p>3.左侧菜单栏，倒数第二个，域名与网站（万网）0.0，好难找</p>
-<p>4.点击域名，跳转到，自己以前买的域名列表（没有的小伙伴，在阿里云首页，按着他们的推荐购买一个域名就行啦）</p>
-<p>5.在自己的域名，操作下面，有解析，点击进入</p>
-<p>6.在 解析设置里面， 点击 添加解析</p>
-<p>7.记录类型  选择 CNAME</p>
-<p>8.主机记录  填入  @</p>
-<p>9.解析线路  为 默认</p>
-<p>10.记录值   为 你的GitHub 项目的地址，但是是后面 必须加一个 . （比如 velg03961485.github.io. ）<br>其实这就是一个简单的地址重定向，还能用阿里的域名监听你的地址</p>
-<p>11.TTL值  选用十分钟  取最小的时间，启动速度，TTL为缓存时间，数值越小，修改记录各地生效时间越快</p>
-<p>12.点击确认 这样就ok啦(<em>^▽^</em>)  ，你就可以通过你的域名访问你的blog</p>
-<p>四、接下来就说说，我遇到的大坑，自己手贱造成的</p>
-<p>在我点击确认的时候，报错，请求失败，提示说，我的CNAME 和 MX 记录冲突</p>
-<p>因为我的主机记录填写了邮箱，而且邮箱还与我的GitHub账号相同</p>
-<p>域名自动为我填写 MX 邮箱记录</p>
-<p>阿里云的东西有时候还真是很难搞懂的，可又不得不用</p>
-<p>扒文档，问大神</p>
-<p>大神给我解决方案，它不是冲突嘛，采用二次地址定义喽，用一X定义你编译后的地址</p>
-<p>然后再用 Link 把地址重定义</p>
-<p>哎，我翻遍了阿里的文档，都没有这个Link 属性嘛o(╥﹏╥)o</p>
-<p>不多说，继续翻文档，找解决方案</p>
-<p>因为记录冲突，自己又不能删除冲突的记录，想着，我给暂停了，这样就可以添加了吧</p>
-<p>结果文档给我来句 </p>
-<p>解析记录暂停后，用户仍然能够修改、删除解析记录，且被暂停的解析记录，也会参与到解析记录冲突判断的规则中。</p>
-<p>啥话不说，删了，删了，既然冲突那就干掉一个呗，email的记录，全部删掉</p>
-<p>照着上面来一遍，ok 添加成功，等待生效吧(<em>^▽^</em>)</p>
-<p>五、接下来的文档，会给大家讲解，如何新增自己的blog，和对blog设置新的功能，调整页面，更改页面风格。和后续更新我的，坑神之路O(∩_∩)O哈哈~</p>
-
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-    <a href="/2018/05/25/搭建blog-of-second/">
-    <time datetime="2018-05-25T06:51:35.000Z" class="entry-date">
-        2018-05-25
-    </time>
-</a>
-    
-    
-    </footer>
-</article>
-
-
-
-
-
-
-  
   
     <nav id="pagination">
       <nav id="page-nav">
@@ -744,6 +706,10 @@
       <ul>
         
           <li>
+            <a href="/2018/08/24/Vue-小方法2/">Vue 小方法2</a>
+          </li>
+        
+          <li>
             <a href="/2018/08/24/点击粘贴复制文本/">点击粘贴复制文本</a>
           </li>
         
@@ -757,10 +723,6 @@
         
           <li>
             <a href="/2018/08/14/Vue-面包屑导航/">Vue 面包屑导航</a>
-          </li>
-        
-          <li>
-            <a href="/2018/08/13/Vue-小方法-处理/">Vue 小方法(处理)</a>
           </li>
         
       </ul>
