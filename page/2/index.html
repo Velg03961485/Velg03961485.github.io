@@ -61,6 +61,69 @@
       <div id="main" class="wrapper">
         <div id="primary" class="site-content"><div id="content" role="main">
   
+    <article id="post-git-使用命令-工作流" class="post-git-使用命令-工作流 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/2018/05/25/git-使用命令-工作流/">git 使用命令(工作流)</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/git-使用命令-工作流/" data-id="cjl93cglr0006jwx5v9jokgqu" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <p>给大家分享一下，在工作中常用到的git 基本命令</p>
+<p>先针对于，你工作中，搬砖常用到的</p>
+<p>首先你要了解，你自己的砖分别放在什么区域</p>
+<p>工作区  本地代码存放的地方，一般使用 git status 查看修改的文件</p>
+<p>暂存区  使用git add . 把工作区的砖 搬到 暂存区</p>
+<p>仓库区  git commit 命令  搬进去，记得要写搬砖记录的</p>
+<p>远程仓库  远程代码管理仓库 使用 git push 提交 ，把砖推送远程</p>
+<p>+++++++++++++++++在master主枝干下++++++++++++++++++++++++++++<br>1.平时提交工作<br>    git status<br>    git add .<br>    git commit -m “自己的任务/名称”<br>    git push<br>2.如果推送的时候，报错没有提交成功需要拉去项目<br>    git pull<br>3.拉去之后会出现文本写入页面<br>    按Esc<br>    shift + : (就是输入:)<br>    wq<br>    enter 退出<br>4.继续提交<br>    git push</p>
+<hr>
+<p>git rm -cached filename(文件名)  把暂缓区的文件拉工作区<br>git log  查看提交日志</p>
+<p>===============================================================</p>
+<p>你电脑公钥的生成<br>1，检查自己的电脑有没有存在秘钥<br>ls -al ~/.ssh<br>2.如果没有显示秘钥，则生成一个<br>ssh-kengen -t rsa -C “<a href="mailto:*********@qq.com" target="_blank" rel="noopener">*********@qq.com</a>“<br>一路enter下来，直到有生成秘钥显示<br>3,打开git（码云），设置/SHH公钥,把id_rsa.pub里面的粘贴复制进去,点击确认<br>4，在本地建立一个新的文件夹，打开git<br>5,git clone <a href="mailto:git@gitee.com" target="_blank" rel="noopener">git@gitee.com</a>:hangzhou_bosom_friend/hangzhoubison.git<br>把远程的代码克隆下来</p>
+<p>==================================================<br>新项目在分支下  提交代码<br>git status   查看自己的代码状态<br>git fetch  拉去远程分支代码，建议不要这样做，切换到分支下面拉取<br>git checkout -b hangzhoubison origin/dev1.0   切换分支<br>git pull origin dev1.0   拉取分支代码</p>
+<p>提交自己的代码之前最好要先拉取一次，保持自己的代码最新<br>git add .   提交到暂缓区<br>git commit -m “提交备注”  提交到本地仓库,一定要有队这次更改的详细记录<br>git branch 查看本地以及远程的所有分支 (一定要保持在本地分支上进行提交)<br>(如果不小心切换分支了，git checkout hangzhoubison [本地分支名，不知道的话自己查看分支再进行切换])<br>git push origin HEAD:dev1.0  推送本地代码到远程(我查到的远程分支名是HEAD:dev1.0，自己可以查看远程分支是什么)</p>
+<hr>
+<p>如果你提交远程的时候没有拉取保持最新就提交的话，请参考 3</p>
+<p>git log 查看提交记录</p>
+<p>git rm -cached filename  把暂存区的文件拉回工作区</p>
+<p>git diff filename  查看提交文件之间的不同</p>
+<p>知道这些命令，你就成为一个入门的搬砖工啦(<em>^▽^</em>)</p>
+<p>要想码砖，就要继续努力O(∩_∩)O哈哈~</p>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2018/05/25/git-使用命令-工作流/">
+    <time datetime="2018-05-25T11:48:48.000Z" class="entry-date">
+        2018-05-25
+    </time>
+</a>
+    
+    
+    </footer>
+</article>
+
+
+
+
+
+
+  
     <article id="post-搭建blog-of-second" class="post-搭建blog-of-second post type-post status-publish format-standard hentry">
     <!---->
 
@@ -76,7 +139,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/搭建blog-of-second/" data-id="cjl7pqgnv000d1ox5rsh1vycn" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/搭建blog-of-second/" data-id="cjl93cgmb000cjwx5wtefggo3" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -177,7 +240,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/24/我的第一篇文章/" data-id="cjl7pqgnj000a1ox5df1ph9mr" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/24/我的第一篇文章/" data-id="cjl93cglz000ajwx52rdkegfe" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -239,7 +302,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/24/搭建blog-of-first/" data-id="cjl7pqgnm000b1ox5fiem20ur" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/24/搭建blog-of-first/" data-id="cjl93cgm3000bjwx5mn4hfwte" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -310,7 +373,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/23/hello-world/" data-id="cjl7pqgnh00091ox5z6xpw89f" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/23/hello-world/" data-id="cjl93cglx0009jwx5enz1lc8f" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -375,6 +438,10 @@
       <ul>
         
           <li>
+            <a href="/2018/08/25/URl-取值传值/">URl 取值传值</a>
+          </li>
+        
+          <li>
             <a href="/2018/08/24/Vue-小方法2/">Vue 小方法2</a>
           </li>
         
@@ -388,10 +455,6 @@
         
           <li>
             <a href="/2018/08/16/Vue-短信发送倒计时/">Vue 短信发送倒计时</a>
-          </li>
-        
-          <li>
-            <a href="/2018/08/14/Vue-面包屑导航/">Vue 面包屑导航</a>
           </li>
         
       </ul>

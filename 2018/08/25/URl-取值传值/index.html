@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="JQuery下动态生成的数据 onclick 函数下面 传两个动态的值给函数结果报错 一个值为 is not defined ，开发者查询页面 在函数里面两个值是存在的
+1234for (var i = 0;i &amp;lt; Data.length ;i++)&amp;#123;    html = &amp;apos" />
+  
+
+  
+  
+  
+  
+  
+  
+  <title>URl 取值传值 | Velg 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="JQuery下动态生成的数据 onclick 函数下面 传两个动态的值给函数结果报错 一个值为 is not defined ，开发者查询页面 在函数里面两个值是存在的 1234for (var i = 0;i &amp;lt; Data.length ;i++)&amp;#123;    html = &amp;apos;&amp;lt;div class=&amp;quot;guarant&amp;quot;&amp;gt; &amp;lt;div cla">
+<meta property="og:type" content="article">
+<meta property="og:title" content="URl 取值传值">
+<meta property="og:url" content="http://yoursite.com/2018/08/25/URl-取值传值/index.html">
+<meta property="og:site_name" content="Velg 的博客">
+<meta property="og:description" content="JQuery下动态生成的数据 onclick 函数下面 传两个动态的值给函数结果报错 一个值为 is not defined ，开发者查询页面 在函数里面两个值是存在的 1234for (var i = 0;i &amp;lt; Data.length ;i++)&amp;#123;    html = &amp;apos;&amp;lt;div class=&amp;quot;guarant&amp;quot;&amp;gt; &amp;lt;div cla">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-25T07:15:45.292Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="URl 取值传值">
+<meta name="twitter:description" content="JQuery下动态生成的数据 onclick 函数下面 传两个动态的值给函数结果报错 一个值为 is not defined ，开发者查询页面 在函数里面两个值是存在的 1234for (var i = 0;i &amp;lt; Data.length ;i++)&amp;#123;    html = &amp;apos;&amp;lt;div class=&amp;quot;guarant&amp;quot;&amp;gt; &amp;lt;div cla">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src='//push.zhanzhang.baidu.com/push.js'></script>
+</head>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Velg 的博客" rel="home">Velg 的博客</a>
+      </h1>
+      
+        <script type="text/javascript" src="http://api.hitokoto.us/rand?encode=js&charset=utf-8"></script>
+        <h2 class="site-description"><script>hitokoto();</script></h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/archives">Archives</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-URl-取值传值" class="post-URl-取值传值 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      URl 取值传值
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/25/URl-取值传值/" data-id="cjl93cgla0000jwx5bgvgkbug" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <p>JQuery下<br>动态生成的数据 onclick 函数下面 传两个动态的值给函数<br>结果报错 一个值为 is not defined ，开发者查询页面 在函数里面两个值是存在的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for (var i = 0;i &lt; Data.length ;i++)&#123;</span><br><span class="line">    html = &apos;&lt;div class=&quot;guarant&quot;&gt; &lt;div class=&quot;guarantBalck&quot;&gt;&lt;div class=&quot;guarantInfo&quot;&gt;&lt;p class=&quot;infoTime&quot;&gt;维修日期:&apos;+ Common.changemsTodate(Data[i].addtime) + &apos;&lt;/p&gt;&lt;p class=&quot;infoPart&quot;&gt;&apos;+ Data[i].beginDepartment +&apos;&lt;/p&gt;&lt;/div&gt;&lt;div class=&quot;guarantForm&quot;&gt;&lt;p class=&quot;infoName&quot;&gt;商品名称:&apos;+ Data[i].goodsName +&apos;&lt;/p&gt;&lt;p class=&quot;glyphicon glyphicon-chevron-right infoMark&quot;&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;btn&quot; onclick=&quot;postCheck(&apos;+ Data[i].id+&apos;,&apos;+ Data[i].goodsName +&apos;)&quot;&gt;查看进度&lt;/div&gt;&lt;/div&gt;&apos;;</span><br><span class="line">    $(&apos;.guaranteeBox&apos;).append(html);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>经排查传入的值是需要用转义字符来转义一次的<br>于是把函数修改为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onclick=&quot;postCheck(\&apos;&apos;+ Data[i].id+&apos;,&apos;+ Data[i].goodsName +&apos;\&apos;)&quot;</span><br></pre></td></tr></table></figure></p>
+<p>这样postCheck 传值就成功了，但是还有问题<br>输出的值 为一个参数，用逗号隔开<br>这样还是不符合要求<br>再次修改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onclick=&quot;postCheck(&apos;+ Data[i].id+&apos;,\&apos;&apos;+ Data[i].goodsName +&apos;\&apos;)&quot;</span><br></pre></td></tr></table></figure></p>
+<p>这样两个值就能传值成功了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(window).attr(&apos;location&apos;,&quot;/web/certification/miantenanceRecordDetail?id=&quot;+ id +&quot;&amp;&amp;name=&quot;+ name +&quot;&quot;);</span><br></pre></td></tr></table></figure></p>
+<p>传到另一个页面，分别获取两个值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var id = window.location.href.split(&apos;?&apos;)[1].split(&apos;=&apos;)[1].split(&apos;&amp;&amp;&apos;)[0];</span><br><span class="line">var name = window.location.href.split(&apos;&amp;&amp;&apos;)[1].split(&apos;=&apos;)[1].split(&apos;#&apos;)[0];</span><br></pre></td></tr></table></figure></p>
+<p>输出id正确，但是name，因为传值为中文，取到的值乱码</p>
+<p>what a fuck!<br>意外总是意想不到，老司机开始发车，js 带有转码解析函数<br>一共有三种，总有一款适合你</p>
+<ol>
+<li>escape 和 unescape<br>介绍:是对ASCII字母、数字、标点符号@*_+-./以外的其他字符进行编码<br>escape 编码<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(escape(&apos;懵可乐&apos;));  %u61F5%u53EF%u4E50</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>unescape 解码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(unescape(&apos;%u61F5%u53EF%u4E50&apos;));   懵可乐</span><br></pre></td></tr></table></figure></p>
+<p>2.encodeURI 和 decodeURI<br>介绍:返回编码为有效的统一资源标识符（URL）的字符串，不会被编码的字符！@#$&amp;*()=:/;?=’  encodeURI 是js中真正用来对URL进行编码的函数<br>encodeURI 编码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log(encodeURI(&apos;https://velg03961485.github.io&apos;));  https://velg03961485.github.io</span><br><span class="line">console.log(encodeURI(&apos;%u61F5%u53EF%u4E50&apos;));  懵可乐</span><br></pre></td></tr></table></figure></p>
+<p>decodeURI 解码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">console.log(decodeURI(&apos;https://velg03961485.github.io&apos;));  https://velg03961485.github.io</span><br><span class="line">console.log(decodeURI(&apos;%u61F5%u53EF%u4E50&apos;));  报错</span><br><span class="line">Uncaught URIError: URI malformed</span><br><span class="line">    at decodeURI</span><br></pre></td></tr></table></figure></p>
+<p>当编码的URL不是真正的URL，会报错此编译为malformed（畸形的地址）<br>3.encodeURIComponent 和 decodeURIComponent<br>介绍:对URL的组成部分进行个别编码，而不是对于整个URL进行编码<br>encodeURIComponent 编码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log(encodeURIComponent(&apos;%u61F5%u53EF%u4E50&apos;));  %25u61F5%25u53EF%25u4E50</span><br><span class="line">console.log(encodeURIComponent(&apos;https://velg03961485.github.io&apos;));  https%3A%2F%2Fvelg03961485.github.io</span><br></pre></td></tr></table></figure></p>
+<p>decodeURIComponent  解码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">console.log(decodeURIComponent(&apos;https://velg03961485.github.io&apos;));  https://velg03961485.github.io</span><br><span class="line">console.log(decodeURIComponent(&apos;https%3A%2F%2Fvelg03961485.github.io&apos;));  https://velg03961485.github.io</span><br><span class="line">console.log(decodeURIComponent(&apos;%u61F5%u53EF%u4E50&apos;));  报错 </span><br><span class="line">Uncaught URIError: URI malformed</span><br><span class="line">    at decodeURIComponent</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2018/08/25/URl-取值传值/">
+    <time datetime="2018-08-25T06:28:13.000Z" class="entry-date">
+        2018-08-25
+    </time>
+</a>
+    
+    
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+    
+        <span class="nav-next"><a href="/2018/08/24/Vue-小方法2/" rel="next">Vue 小方法2 <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="s" id="s" />
+        <input type="submit" id="searchsubmit" value="搜索" />
+    </div>
+</form></aside>
+  
+    
+  
+    
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/25/URl-取值传值/">URl 取值传值</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/24/Vue-小方法2/">Vue 小方法2</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/24/点击粘贴复制文本/">点击粘贴复制文本</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/20/angular-图片上传orientation旋转属性/">angular 图片上传orientation旋转属性</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/16/Vue-短信发送倒计时/">Vue 短信发送倒计时</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  
+    
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2018 刘大旭
+    All rights reserved.</p>
+    <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
+</footer>
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>

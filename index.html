@@ -61,6 +61,65 @@
       <div id="main" class="wrapper">
         <div id="primary" class="site-content"><div id="content" role="main">
   
+    <article id="post-URl-取值传值" class="post-URl-取值传值 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/2018/08/25/URl-取值传值/">URl 取值传值</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/25/URl-取值传值/" data-id="cjl93cgla0000jwx5bgvgkbug" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <p>JQuery下<br>动态生成的数据 onclick 函数下面 传两个动态的值给函数<br>结果报错 一个值为 is not defined ，开发者查询页面 在函数里面两个值是存在的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for (var i = 0;i &lt; Data.length ;i++)&#123;</span><br><span class="line">    html = &apos;&lt;div class=&quot;guarant&quot;&gt; &lt;div class=&quot;guarantBalck&quot;&gt;&lt;div class=&quot;guarantInfo&quot;&gt;&lt;p class=&quot;infoTime&quot;&gt;维修日期:&apos;+ Common.changemsTodate(Data[i].addtime) + &apos;&lt;/p&gt;&lt;p class=&quot;infoPart&quot;&gt;&apos;+ Data[i].beginDepartment +&apos;&lt;/p&gt;&lt;/div&gt;&lt;div class=&quot;guarantForm&quot;&gt;&lt;p class=&quot;infoName&quot;&gt;商品名称:&apos;+ Data[i].goodsName +&apos;&lt;/p&gt;&lt;p class=&quot;glyphicon glyphicon-chevron-right infoMark&quot;&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;btn&quot; onclick=&quot;postCheck(&apos;+ Data[i].id+&apos;,&apos;+ Data[i].goodsName +&apos;)&quot;&gt;查看进度&lt;/div&gt;&lt;/div&gt;&apos;;</span><br><span class="line">    $(&apos;.guaranteeBox&apos;).append(html);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>经排查传入的值是需要用转义字符来转义一次的<br>于是把函数修改为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onclick=&quot;postCheck(\&apos;&apos;+ Data[i].id+&apos;,&apos;+ Data[i].goodsName +&apos;\&apos;)&quot;</span><br></pre></td></tr></table></figure></p>
+<p>这样postCheck 传值就成功了，但是还有问题<br>输出的值 为一个参数，用逗号隔开<br>这样还是不符合要求<br>再次修改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onclick=&quot;postCheck(&apos;+ Data[i].id+&apos;,\&apos;&apos;+ Data[i].goodsName +&apos;\&apos;)&quot;</span><br></pre></td></tr></table></figure></p>
+<p>这样两个值就能传值成功了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(window).attr(&apos;location&apos;,&quot;/web/certification/miantenanceRecordDetail?id=&quot;+ id +&quot;&amp;&amp;name=&quot;+ name +&quot;&quot;);</span><br></pre></td></tr></table></figure></p>
+<p>传到另一个页面，分别获取两个值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var id = window.location.href.split(&apos;?&apos;)[1].split(&apos;=&apos;)[1].split(&apos;&amp;&amp;&apos;)[0];</span><br><span class="line">var name = window.location.href.split(&apos;&amp;&amp;&apos;)[1].split(&apos;=&apos;)[1].split(&apos;#&apos;)[0];</span><br></pre></td></tr></table></figure></p>
+<p>输出id正确，但是name，因为传值为中文，取到的值乱码</p>
+<p>what a fuck!<br>意外总是意想不到，老司机开始发车，js 带有转码解析函数<br>一共有三种，总有一款适合你</p>
+<ol>
+<li>escape 和 unescape<br>介绍:是对ASCII字母、数字、标点符号@*_+-./以外的其他字符进行编码<br>escape 编码<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(escape(&apos;懵可乐&apos;));  %u61F5%u53EF%u4E50</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>unescape 解码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(unescape(&apos;%u61F5%u53EF%u4E50&apos;));   懵可乐</span><br></pre></td></tr></table></figure></p>
+<p>2.encodeURI 和 decodeURI<br>介绍:返回编码为有效的统一资源标识符（URL）的字符串，不会被编码的字符！@#$&amp;*()=:/;?=’  encodeURI 是js中真正用来对URL进行编码的函数<br>encodeURI 编码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log(encodeURI(&apos;https://velg03961485.github.io&apos;));  https://velg03961485.github.io</span><br><span class="line">console.log(encodeURI(&apos;%u61F5%u53EF%u4E50&apos;));  懵可乐</span><br></pre></td></tr></table></figure></p>
+<p>decodeURI 解码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">console.log(decodeURI(&apos;https://velg03961485.github.io&apos;));  https://velg03961485.github.io</span><br><span class="line">console.log(decodeURI(&apos;%u61F5%u53EF%u4E50&apos;));  报错</span><br><span class="line">Uncaught URIError: URI malformed</span><br><span class="line">    at decodeURI</span><br></pre></td></tr></table></figure></p>
+<p>当编码的URL不是真正的URL，会报错此编译为malformed（畸形的地址）<br>3.encodeURIComponent 和 decodeURIComponent<br>介绍:对URL的组成部分进行个别编码，而不是对于整个URL进行编码<br>encodeURIComponent 编码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log(encodeURIComponent(&apos;%u61F5%u53EF%u4E50&apos;));  %25u61F5%25u53EF%25u4E50</span><br><span class="line">console.log(encodeURIComponent(&apos;https://velg03961485.github.io&apos;));  https%3A%2F%2Fvelg03961485.github.io</span><br></pre></td></tr></table></figure></p>
+<p>decodeURIComponent  解码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">console.log(decodeURIComponent(&apos;https://velg03961485.github.io&apos;));  https://velg03961485.github.io</span><br><span class="line">console.log(decodeURIComponent(&apos;https%3A%2F%2Fvelg03961485.github.io&apos;));  https://velg03961485.github.io</span><br><span class="line">console.log(decodeURIComponent(&apos;%u61F5%u53EF%u4E50&apos;));  报错 </span><br><span class="line">Uncaught URIError: URI malformed</span><br><span class="line">    at decodeURIComponent</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2018/08/25/URl-取值传值/">
+    <time datetime="2018-08-25T06:28:13.000Z" class="entry-date">
+        2018-08-25
+    </time>
+</a>
+    
+    
+    </footer>
+</article>
+
+
+
+
+
+
+  
     <article id="post-Vue-小方法2" class="post-Vue-小方法2 post type-post status-publish format-standard hentry">
     <!---->
 
@@ -76,7 +135,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/24/Vue-小方法2/" data-id="cjl7pqgm300011ox5ypjod0w1" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/24/Vue-小方法2/" data-id="cjl93cglm0003jwx5645mwfsm" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -147,7 +206,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/24/点击粘贴复制文本/" data-id="cjl7pqgnt000c1ox5ut773t3b" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/24/点击粘贴复制文本/" data-id="cjl93cgme000ejwx5auz6f14t" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -196,7 +255,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/20/angular-图片上传orientation旋转属性/" data-id="cjl7pqgne00071ox5kyp707tb" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/20/angular-图片上传orientation旋转属性/" data-id="cjl93cglt0007jwx5v6pzpeyw" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -247,7 +306,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/16/Vue-短信发送倒计时/" data-id="cjl7pqgm700021ox5ewb0ev5s" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/16/Vue-短信发送倒计时/" data-id="cjl93cglp0005jwx56gho279y" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -300,7 +359,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/14/Vue-面包屑导航/" data-id="cjl7pqgnc00061ox595x56hxr" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/14/Vue-面包屑导航/" data-id="cjl93cglv0008jwx59fjmj5kk" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -348,7 +407,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/13/Vue-小方法-处理/" data-id="cjl7pqglw00001ox5j67khwuw" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/13/Vue-小方法-处理/" data-id="cjl93cglg0001jwx5zv5lcfhd" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -402,7 +461,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/11/Vue-自定义验证规则/" data-id="cjl7pqgn900041ox5m71mzgmk" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/11/Vue-自定义验证规则/" data-id="cjl93cglj0002jwx5xr3ja0jw" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -474,7 +533,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/06/vue-进阶之封装全局插件/" data-id="cjl7pqgng00081ox53a9ybon4" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/06/vue-进阶之封装全局插件/" data-id="cjl93cgmd000djwx5zf7voiit" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -525,7 +584,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/07/25/Vue-进阶之调用电脑摄像头/" data-id="cjl7pqgn600031ox5la6jhgu0" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/07/25/Vue-进阶之调用电脑摄像头/" data-id="cjl93cglo0004jwx599nuvi9f" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -614,69 +673,6 @@
 
 
   
-    <article id="post-git-使用命令-工作流" class="post-git-使用命令-工作流 post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        
-  
-    <h1 class="entry-title">
-      <a class="article-title" href="/2018/05/25/git-使用命令-工作流/">git 使用命令(工作流)</a>
-    </h1>
-  
-
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/git-使用命令-工作流/" data-id="cjl7pqgna00051ox5l2cuxp9h" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <p>给大家分享一下，在工作中常用到的git 基本命令</p>
-<p>先针对于，你工作中，搬砖常用到的</p>
-<p>首先你要了解，你自己的砖分别放在什么区域</p>
-<p>工作区  本地代码存放的地方，一般使用 git status 查看修改的文件</p>
-<p>暂存区  使用git add . 把工作区的砖 搬到 暂存区</p>
-<p>仓库区  git commit 命令  搬进去，记得要写搬砖记录的</p>
-<p>远程仓库  远程代码管理仓库 使用 git push 提交 ，把砖推送远程</p>
-<p>+++++++++++++++++在master主枝干下++++++++++++++++++++++++++++<br>1.平时提交工作<br>    git status<br>    git add .<br>    git commit -m “自己的任务/名称”<br>    git push<br>2.如果推送的时候，报错没有提交成功需要拉去项目<br>    git pull<br>3.拉去之后会出现文本写入页面<br>    按Esc<br>    shift + : (就是输入:)<br>    wq<br>    enter 退出<br>4.继续提交<br>    git push</p>
-<hr>
-<p>git rm -cached filename(文件名)  把暂缓区的文件拉工作区<br>git log  查看提交日志</p>
-<p>===============================================================</p>
-<p>你电脑公钥的生成<br>1，检查自己的电脑有没有存在秘钥<br>ls -al ~/.ssh<br>2.如果没有显示秘钥，则生成一个<br>ssh-kengen -t rsa -C “<a href="mailto:*********@qq.com" target="_blank" rel="noopener">*********@qq.com</a>“<br>一路enter下来，直到有生成秘钥显示<br>3,打开git（码云），设置/SHH公钥,把id_rsa.pub里面的粘贴复制进去,点击确认<br>4，在本地建立一个新的文件夹，打开git<br>5,git clone <a href="mailto:git@gitee.com" target="_blank" rel="noopener">git@gitee.com</a>:hangzhou_bosom_friend/hangzhoubison.git<br>把远程的代码克隆下来</p>
-<p>==================================================<br>新项目在分支下  提交代码<br>git status   查看自己的代码状态<br>git fetch  拉去远程分支代码，建议不要这样做，切换到分支下面拉取<br>git checkout -b hangzhoubison origin/dev1.0   切换分支<br>git pull origin dev1.0   拉取分支代码</p>
-<p>提交自己的代码之前最好要先拉取一次，保持自己的代码最新<br>git add .   提交到暂缓区<br>git commit -m “提交备注”  提交到本地仓库,一定要有队这次更改的详细记录<br>git branch 查看本地以及远程的所有分支 (一定要保持在本地分支上进行提交)<br>(如果不小心切换分支了，git checkout hangzhoubison [本地分支名，不知道的话自己查看分支再进行切换])<br>git push origin HEAD:dev1.0  推送本地代码到远程(我查到的远程分支名是HEAD:dev1.0，自己可以查看远程分支是什么)</p>
-<hr>
-<p>如果你提交远程的时候没有拉取保持最新就提交的话，请参考 3</p>
-<p>git log 查看提交记录</p>
-<p>git rm -cached filename  把暂存区的文件拉回工作区</p>
-<p>git diff filename  查看提交文件之间的不同</p>
-<p>知道这些命令，你就成为一个入门的搬砖工啦(<em>^▽^</em>)</p>
-<p>要想码砖，就要继续努力O(∩_∩)O哈哈~</p>
-
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-    <a href="/2018/05/25/git-使用命令-工作流/">
-    <time datetime="2018-05-25T11:48:48.000Z" class="entry-date">
-        2018-05-25
-    </time>
-</a>
-    
-    
-    </footer>
-</article>
-
-
-
-
-
-
-  
   
     <nav id="pagination">
       <nav id="page-nav">
@@ -706,6 +702,10 @@
       <ul>
         
           <li>
+            <a href="/2018/08/25/URl-取值传值/">URl 取值传值</a>
+          </li>
+        
+          <li>
             <a href="/2018/08/24/Vue-小方法2/">Vue 小方法2</a>
           </li>
         
@@ -719,10 +719,6 @@
         
           <li>
             <a href="/2018/08/16/Vue-短信发送倒计时/">Vue 短信发送倒计时</a>
-          </li>
-        
-          <li>
-            <a href="/2018/08/14/Vue-面包屑导航/">Vue 面包屑导航</a>
           </li>
         
       </ul>
