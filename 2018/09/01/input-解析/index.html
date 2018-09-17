@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="input 是最常用的前端标签，今天就要从它的样式，规范，兼容来详细的解析如何使用input 给你带来不一样的效果
+1.input样式优化1234567891011121314151617.input&amp;#123;    border: 1px solid #ccc;    padding: 7px " />
+  
+
+  
+  
+  
+  
+  
+  
+  <title>input 解析 | Velg 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="input 是最常用的前端标签，今天就要从它的样式，规范，兼容来详细的解析如何使用input 给你带来不一样的效果 1.input样式优化1234567891011121314151617.input&amp;#123;    border: 1px solid #ccc;    padding: 7px 0px;    border-radius: 3px;    padding-left:5px;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="input 解析">
+<meta property="og:url" content="http://yoursite.com/2018/09/01/input-解析/index.html">
+<meta property="og:site_name" content="Velg 的博客">
+<meta property="og:description" content="input 是最常用的前端标签，今天就要从它的样式，规范，兼容来详细的解析如何使用input 给你带来不一样的效果 1.input样式优化1234567891011121314151617.input&amp;#123;    border: 1px solid #ccc;    padding: 7px 0px;    border-radius: 3px;    padding-left:5px;">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-09-17T03:49:52.044Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="input 解析">
+<meta name="twitter:description" content="input 是最常用的前端标签，今天就要从它的样式，规范，兼容来详细的解析如何使用input 给你带来不一样的效果 1.input样式优化1234567891011121314151617.input&amp;#123;    border: 1px solid #ccc;    padding: 7px 0px;    border-radius: 3px;    padding-left:5px;">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src='//push.zhanzhang.baidu.com/push.js'></script>
+</head>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Velg 的博客" rel="home">Velg 的博客</a>
+      </h1>
+      
+        <script type="text/javascript" src="http://api.hitokoto.us/rand?encode=js&charset=utf-8"></script>
+        <h2 class="site-description"><script>hitokoto();</script></h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/archives">Archives</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-input-解析" class="post-input-解析 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      input 解析
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/09/01/input-解析/" data-id="cjm5r58ka0005p0x5fg05bnyk" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <p>input 是最常用的前端标签，今天就要从它的样式，规范，兼容来详细的解析如何使用<br>input 给你带来不一样的效果</p>
+<p>1.input样式优化<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">.input&#123;</span><br><span class="line">    border: 1px solid #ccc;</span><br><span class="line">    padding: 7px 0px;</span><br><span class="line">    border-radius: 3px;</span><br><span class="line">    padding-left:5px;</span><br><span class="line">    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);</span><br><span class="line">    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);</span><br><span class="line">    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;</span><br><span class="line">    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;</span><br><span class="line">    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s</span><br><span class="line">  &#125;</span><br><span class="line">  .input:focus&#123;</span><br><span class="line">    border-color: #66afe9;</span><br><span class="line">    outline: 0;</span><br><span class="line">    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);</span><br><span class="line">    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>2.input 的type类型有 number，text，button，checkbox，file，hidden，image<br>password，radio，reset，submit<br>同时，根据input不同的类型，来配合使用它的属性，实现不同的效果</p>
+<p>当为type=’number’  IE火狐下会出现，后缀上下调数值按钮<br>可以使用以下样式去除<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.input::-webkit-outer-spin-button,</span><br><span class="line">  .input::-webkit-inner-spin-button&#123;</span><br><span class="line">    -webkit-appearance: none !important;</span><br><span class="line">    margin: 0;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>3.input 设置后缀或者前缀<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;col-md-8 yuan&quot;&gt;</span><br><span class="line">                            &lt;input type=&quot;number&quot; step=&quot;0.00001&quot; class=&quot;form-control&quot; ng-model=&quot;OldList.originalPrice&quot;/&gt;</span><br><span class="line">                        &lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>后缀名 为元 ，通过样式调整<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">.yuan&#123;</span><br><span class="line">     position: relative;</span><br><span class="line"> &#125;</span><br><span class="line">.yuan:after&#123;</span><br><span class="line">    content:&apos;元&apos;;</span><br><span class="line">    display: inline-block;</span><br><span class="line">    z-index:2;</span><br><span class="line">    position: absolute;</span><br><span class="line">    top:8px;</span><br><span class="line">    right:24px;</span><br><span class="line">    width:16px;</span><br><span class="line">    height:16px;</span><br><span class="line">    color:gray;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>同时也可以通过前缀设置动画图标等 效果</p>
+<p>4.vue中通过动态类名设置禁止输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:class=&quot;&#123;disabled: !this.canClick&#125;&quot;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.disabled&#123;</span><br><span class="line">      background-color: #ddd;</span><br><span class="line">      border-color: #ddd;</span><br><span class="line">      color:#57a3f3;</span><br><span class="line">      cursor: not-allowed; // 鼠标变化</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2018/09/01/input-解析/">
+    <time datetime="2018-09-01T07:13:50.000Z" class="entry-date">
+        2018-09-01
+    </time>
+</a>
+    
+    
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+    
+        <span class="nav-next"><a href="/2018/08/25/URl-取值传值/" rel="next">URl 取值传值 <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="s" id="s" />
+        <input type="submit" id="searchsubmit" value="搜索" />
+    </div>
+</form></aside>
+  
+    
+  
+    
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/2018/09/01/input-解析/">input 解析</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/25/URl-取值传值/">URl 取值传值</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/24/Vue-小方法2/">Vue 小方法2</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/24/点击粘贴复制文本/">点击粘贴复制文本</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/20/angular-图片上传orientation旋转属性/">angular 图片上传orientation旋转属性</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  
+    
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2018 刘大旭
+    All rights reserved.</p>
+    <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
+</footer>
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>
