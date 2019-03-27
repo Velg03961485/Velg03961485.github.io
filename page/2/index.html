@@ -61,6 +61,60 @@
       <div id="main" class="wrapper">
         <div id="primary" class="site-content"><div id="content" role="main">
   
+    <article id="post-Vue-小方法-处理" class="post-Vue-小方法-处理 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/2018/08/13/Vue-小方法-处理/">Vue 小方法(处理)</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/13/Vue-小方法-处理/" data-id="cjtr56ni00003qsx5mer60rw5" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <p>最近在Vue 项目里，有遇到很多小细节处理<br>1.vue项目在IE下不能运行<br>抛出 ReferenceError: “Promise” 未定义<br>这里是因为 IE兼容的问题<br>最快速有效的解决方式<br>安装 Babel Polyfill<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save babel-polyfill</span><br></pre></td></tr></table></figure></p>
+<p>这样就OK了</p>
+<p>如果出现问题，可以继续用下面方式<br>在webpack.base.conf.js这个文件加入代码 require(“babel-polyfill”)</p>
+<p>在main.js里面添加代码 import “babel-polyfill”;</p>
+<p>2.修改element默认样式<br>使用element模板是一种快速开发方式<br>但是，又不得不面对去改动样式的问题，尤其最近有遇到 要改变 el-input 标签的样式<br>分析标签层 发现 原生的input是包裹在div标签下面的<br>直接改动样式是无效的 同时抓到el-input 类名去更改也是无效的</p>
+<p>解决方式<br>去掉 scoped ，让此样式能显示<br>但是这样做，回去全局样式造成污染</p>
+<p>可以把样式放到全局控制样式文件里面<br>同时为了不让这样的样式影响到其他的el-input<br>需要给el-input 标签加一个 单独的类名 例如 styleInput<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.styleInput .el-input_inner&#123;</span><br><span class="line">	border:1px solid red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>3.element-ui 图片上传成功之后，页面图片清除不掉<br>这个问题，实在是…无语<br>清除上传记录，清除数据，清除页面  皆无可用<br>其实element 有方法，但是，官网就是没有说明</p>
+<p>在上传的el-upload标签上 绑定ref<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ref=&quot;upload&quot;</span><br></pre></td></tr></table></figure></p>
+<p>然后上传成功函数，或者关闭函数里面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.$refs.upload.clearFiles();</span><br></pre></td></tr></table></figure></p>
+<p>ok 这样就可以清除了，但是图片数组的数据也要记得清空一下，尤其是弹框下的<br>省的会造成数据污染</p>
+<p>后记<br>后面会有一篇专门介绍 el-upload 上传的使用方式<br>全面分析 el-upload 的各种事件以及处理方法</p>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2018/08/13/Vue-小方法-处理/">
+    <time datetime="2018-08-13T07:16:47.000Z" class="entry-date">
+        2018-08-13
+    </time>
+</a>
+    
+    
+    </footer>
+</article>
+
+
+
+
+
+
+  
     <article id="post-Vue-自定义验证规则" class="post-Vue-自定义验证规则 post type-post status-publish format-standard hentry">
     <!---->
 
@@ -76,7 +130,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/11/Vue-自定义验证规则/" data-id="cjmknvlsd00049cx5tcer8odx" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/11/Vue-自定义验证规则/" data-id="cjtr56ni30004qsx5ukh4tdkj" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -148,7 +202,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/06/vue-进阶之封装全局插件/" data-id="cjmknvlsr000b9cx5inh551ft" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/06/vue-进阶之封装全局插件/" data-id="cjtr56niw000dqsx5sv6l1qko" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -199,7 +253,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/07/25/Vue-进阶之调用电脑摄像头/" data-id="cjmknvlsf00059cx55wjl9dsh" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/07/25/Vue-进阶之调用电脑摄像头/" data-id="cjtr56ni60005qsx5w8w04up5" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -303,7 +357,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/git-使用命令-工作流/" data-id="cjmknvlsk00089cx5jp3osda6" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/git-使用命令-工作流/" data-id="cjtr56nif0008qsx5at3fabqm" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -366,7 +420,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/搭建blog-of-second/" data-id="cjmknvlsz000g9cx5mhft31fh" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/25/搭建blog-of-second/" data-id="cjtr56nj8000iqsx5okk9w6py" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -467,7 +521,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/24/我的第一篇文章/" data-id="cjmknvlsw000e9cx54dgd8u4c" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/24/我的第一篇文章/" data-id="cjtr56niy000eqsx5n75q50r3" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -529,7 +583,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/24/搭建blog-of-first/" data-id="cjmknvlsx000f9cx5xmax6qh9" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/24/搭建blog-of-first/" data-id="cjtr56nj1000fqsx5st6wdf6q" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -600,7 +654,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/23/hello-world/" data-id="cjmknvlsm00099cx5el8lt1c9" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/05/23/hello-world/" data-id="cjtr56nic0007qsx5l900bcgp" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -665,6 +719,10 @@
       <ul>
         
           <li>
+            <a href="/2019/03/27/小程序开发进程笔记分享/">小程序开发进程笔记分享</a>
+          </li>
+        
+          <li>
             <a href="/2018/09/27/微信公众号内嵌网页/">微信公众号内嵌网页</a>
           </li>
         
@@ -680,10 +738,6 @@
             <a href="/2018/08/25/URl-取值传值/">URl 取值传值</a>
           </li>
         
-          <li>
-            <a href="/2018/08/24/Vue-小方法2/">Vue 小方法2</a>
-          </li>
-        
       </ul>
     </div>
   </aside>
@@ -696,7 +750,7 @@
 </div>
       </div>
       <footer id="colophon" role="contentinfo">
-    <p>&copy; 2018 刘大旭
+    <p>&copy; 2019 刘大旭
     All rights reserved.</p>
     <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
 </footer>

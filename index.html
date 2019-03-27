@@ -61,6 +61,82 @@
       <div id="main" class="wrapper">
         <div id="primary" class="site-content"><div id="content" role="main">
   
+    <article id="post-小程序开发进程笔记分享" class="post-小程序开发进程笔记分享 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/2019/03/27/小程序开发进程笔记分享/">小程序开发进程笔记分享</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2019/03/27/小程序开发进程笔记分享/" data-id="cjtr56nit000cqsx5orznooxg" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <p>小程序本质基于vue，有相同的生命周期和事件处理</p>
+<p>·1.小程序的页面跳转，非常重要，每个跳转方式代表不同的使用途径</p>
+<p>1 switchTab   跳到有tab页面，并关闭其他没有tab的页面</p>
+<p>2.redirectTo    关闭当前页，跳到应用内的某个页面</p>
+<p>3.navigateTo   保留当前页，跳到应用中的某个页面，可以使用wx.navigateBack  返回上个页面，最多只能跳五个</p>
+<p>4.reLaunch   跳转到指定页面，并关闭其他所有的页面（最好在返回首页的时候用）</p>
+<p>交替使用跳转API可以达到很好的效果</p>
+<p>·2.小程序自主插件  commpents  ，这里介绍关于日期时间插件</p>
+<p><a href="https://github.com/Velg03961485/time-choose-plug-in-of-wechat-mini-app" target="_blank" rel="noopener">https://github.com/Velg03961485/time-choose-plug-in-of-wechat-mini-app</a></p>
+<p>·3.wxchart 一款纯js编写插件，使用相当方便  如果遇到问题，建议直接修改插件</p>
+<p><a href="https://github.com/Velg03961485/wx-charts" target="_blank" rel="noopener">https://github.com/Velg03961485/wx-charts</a></p>
+<p>·4.小程序引用外部字体</p>
+<p>1   如果没有ttf、eot、svg、woff   字体包，或者不对应，可以通过<br><a href="https://www.fontconverter.org/" target="_blank" rel="noopener">https://www.fontconverter.org/</a>    这个网站进行转换一下</p>
+<p>2  然后把得到的ttf  字体包（如果有这种字体包，就不用进行步骤1），在<br><a href="https://transfonter.org/" target="_blank" rel="noopener">https://transfonter.org/</a>    这个网站<br>“Add fonts”   上传字体包<br>选择 Base64 encode    为 on<br>勾选下面的所有选项   ，TTF  WOFF  SVG  EOT WOFF2<br>点击  Convert    ,生成新字体包，生成后会出现  Download<br>点击下载      ，这样你项目中需要用的字体就生成了</p>
+<p>3  在小程序项目里  第一等级(和components，pages平级 ) 创建文件夹 fontStyle (自定义)<br>把刚才下载的文件里面的内容，全部粘贴复制到  这个fontStyle文件里面</p>
+<p>4   在fontStyle文件夹下，创建一个新的 newFont.wxss   文件，在刚才复制的内容里面，找到stylesheet.css     打开，把里面的内容全部粘贴复制到 newFont.wxss中</p>
+<p>5.在你要引用字体的wxss文件中，先引入字体  @import ‘../../fontStyle/newFont.wxss’;<br>在样式里面   font-family: ‘286-CAI978’;<br>这里要注意的是  引入字体的名称  ，可以直接在 newFont.wxss 中查看，如果想更改，可以把名字更改为自定义，记得要改完整</p>
+<p>·6.小程序wxs过滤器  这里主要是提醒注意几点</p>
+<p>1.不要使用let 声明对象，会报错  只能用var</p>
+<p>2.不要使用new Date()  获取当前时间，同样会报错<br>    可以使用getDate()获取当前时间</p>
+<p>·7.使用节流函数，防止多次触发点击事件<br>    当然你也可以使用布尔值通过切换来改变<br>这里的节流函数可以自主改变控制的时间长短</p>
+<ol>
+<li><p>在utils  文件中 util.js     中</p>
+<p>// 函数节流限制测试<br>function throttle(fn, gapTime) {<br>if (gapTime == null || gapTime == undefined) {<br>gapTime = 1500<br>}</p>
+<p>let _lastTime = null</p>
+<p>// 返回新的函数<br>return function () {<br>let _nowTime = + new Date()<br>if (_nowTime - _lastTime &gt; gapTime || !_lastTime) {<br>  fn.apply(this, arguments)   //将this和参数传给原函数<br>  _lastTime = _nowTime<br>}<br>}<br>}</p>
+</li>
+</ol>
+<p>记得下面要在 module.exports   中抛出此函数</p>
+<p>module.exports = {<br>  throttle: throttle<br>}</p>
+<ol start="2">
+<li>在需要用到的js文件中，引入 js<br>const util = require(‘../../utils/util.js’)</li>
+</ol>
+<p>checkMemberBtn: util.throttle(function (e) , 3000),</p>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2019/03/27/小程序开发进程笔记分享/">
+    <time datetime="2019-03-27T10:03:26.000Z" class="entry-date">
+        2019-03-27
+    </time>
+</a>
+    
+    
+    </footer>
+</article>
+
+
+
+
+
+
+  
     <article id="post-微信公众号内嵌网页" class="post-微信公众号内嵌网页 post type-post status-publish format-standard hentry">
     <!---->
 
@@ -76,7 +152,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/09/27/微信公众号内嵌网页/" data-id="cjmknvlsu000d9cx5kbgbqt95" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/09/27/微信公众号内嵌网页/" data-id="cjtr56nj3000gqsx5n699uqyv" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -131,7 +207,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/09/17/weixin-公众号插件/" data-id="cjmknvlst000c9cx5g27vmmar" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/09/17/weixin-公众号插件/" data-id="cjtr56nij0009qsx5rrfvs3h5" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -174,7 +250,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/09/01/input-解析/" data-id="cjmknvlso000a9cx5cgi8da96" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/09/01/input-解析/" data-id="cjtr56nim000aqsx5vlmdqhkx" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -225,7 +301,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/25/URl-取值传值/" data-id="cjmknvls000009cx5qe8vlz5j" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/25/URl-取值传值/" data-id="cjtr56nhl0000qsx50tor828j" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -284,7 +360,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/24/Vue-小方法2/" data-id="cjmknvls600019cx50iuc7vpr" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/24/Vue-小方法2/" data-id="cjtr56nhx0002qsx5hy1klwl1" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -355,7 +431,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/24/点击粘贴复制文本/" data-id="cjmknvlt0000h9cx5ouvdn8g7" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/24/点击粘贴复制文本/" data-id="cjtr56nj6000hqsx5v6fofkbl" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -404,7 +480,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/20/angular-图片上传orientation旋转属性/" data-id="cjmknvlsi00079cx57092xu3t" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/20/angular-图片上传orientation旋转属性/" data-id="cjtr56niq000bqsx5snndqqcl" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -455,7 +531,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/16/Vue-短信发送倒计时/" data-id="cjmknvlsb00039cx5ilf9h0rn" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/16/Vue-短信发送倒计时/" data-id="cjtr56nht0001qsx56s6wc1vi" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -508,7 +584,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/14/Vue-面包屑导航/" data-id="cjmknvlsh00069cx5jd14du4h" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/14/Vue-面包屑导航/" data-id="cjtr56ni90006qsx52srb336t" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -528,60 +604,6 @@
     <a href="/2018/08/14/Vue-面包屑导航/">
     <time datetime="2018-08-14T07:28:54.000Z" class="entry-date">
         2018-08-14
-    </time>
-</a>
-    
-    
-    </footer>
-</article>
-
-
-
-
-
-
-  
-    <article id="post-Vue-小方法-处理" class="post-Vue-小方法-处理 post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        
-  
-    <h1 class="entry-title">
-      <a class="article-title" href="/2018/08/13/Vue-小方法-处理/">Vue 小方法(处理)</a>
-    </h1>
-  
-
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2018/08/13/Vue-小方法-处理/" data-id="cjmknvls900029cx5kgkhc4wf" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <p>最近在Vue 项目里，有遇到很多小细节处理<br>1.vue项目在IE下不能运行<br>抛出 ReferenceError: “Promise” 未定义<br>这里是因为 IE兼容的问题<br>最快速有效的解决方式<br>安装 Babel Polyfill<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save babel-polyfill</span><br></pre></td></tr></table></figure></p>
-<p>这样就OK了</p>
-<p>如果出现问题，可以继续用下面方式<br>在webpack.base.conf.js这个文件加入代码 require(“babel-polyfill”)</p>
-<p>在main.js里面添加代码 import “babel-polyfill”;</p>
-<p>2.修改element默认样式<br>使用element模板是一种快速开发方式<br>但是，又不得不面对去改动样式的问题，尤其最近有遇到 要改变 el-input 标签的样式<br>分析标签层 发现 原生的input是包裹在div标签下面的<br>直接改动样式是无效的 同时抓到el-input 类名去更改也是无效的</p>
-<p>解决方式<br>去掉 scoped ，让此样式能显示<br>但是这样做，回去全局样式造成污染</p>
-<p>可以把样式放到全局控制样式文件里面<br>同时为了不让这样的样式影响到其他的el-input<br>需要给el-input 标签加一个 单独的类名 例如 styleInput<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.styleInput .el-input_inner&#123;</span><br><span class="line">	border:1px solid red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>3.element-ui 图片上传成功之后，页面图片清除不掉<br>这个问题，实在是…无语<br>清除上传记录，清除数据，清除页面  皆无可用<br>其实element 有方法，但是，官网就是没有说明</p>
-<p>在上传的el-upload标签上 绑定ref<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ref=&quot;upload&quot;</span><br></pre></td></tr></table></figure></p>
-<p>然后上传成功函数，或者关闭函数里面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.$refs.upload.clearFiles();</span><br></pre></td></tr></table></figure></p>
-<p>ok 这样就可以清除了，但是图片数组的数据也要记得清空一下，尤其是弹框下的<br>省的会造成数据污染</p>
-<p>后记<br>后面会有一篇专门介绍 el-upload 上传的使用方式<br>全面分析 el-upload 的各种事件以及处理方法</p>
-
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-    <a href="/2018/08/13/Vue-小方法-处理/">
-    <time datetime="2018-08-13T07:16:47.000Z" class="entry-date">
-        2018-08-13
     </time>
 </a>
     
@@ -624,6 +646,10 @@
       <ul>
         
           <li>
+            <a href="/2019/03/27/小程序开发进程笔记分享/">小程序开发进程笔记分享</a>
+          </li>
+        
+          <li>
             <a href="/2018/09/27/微信公众号内嵌网页/">微信公众号内嵌网页</a>
           </li>
         
@@ -639,10 +665,6 @@
             <a href="/2018/08/25/URl-取值传值/">URl 取值传值</a>
           </li>
         
-          <li>
-            <a href="/2018/08/24/Vue-小方法2/">Vue 小方法2</a>
-          </li>
-        
       </ul>
     </div>
   </aside>
@@ -655,7 +677,7 @@
 </div>
       </div>
       <footer id="colophon" role="contentinfo">
-    <p>&copy; 2018 刘大旭
+    <p>&copy; 2019 刘大旭
     All rights reserved.</p>
     <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
 </footer>
