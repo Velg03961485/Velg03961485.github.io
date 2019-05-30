@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="ng-change 在select下第一次触发失效因为需要动态注入select options的数据，同时保证注入完数据后，复填选择的数据
+同时还对select添加了ng-change事件
+结果发现，ng-change默认第一条数据无论怎么点击就是无效
+有效状态是，除非点击其他的选项，再去点击第一条" />
+  
+
+  
+  
+  
+  
+  
+  
+  <title>angular/ng-change of select | Velg 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="ng-change 在select下第一次触发失效因为需要动态注入select options的数据，同时保证注入完数据后，复填选择的数据 同时还对select添加了ng-change事件 结果发现，ng-change默认第一条数据无论怎么点击就是无效 有效状态是，除非点击其他的选项，再去点击第一条options，第一条数据才有效 经过排查，发现 1.这里的select是在弹窗中的 2.弹窗打开的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="angular&#x2F;ng-change of select">
+<meta property="og:url" content="http://yoursite.com/2019/05/30/angular-ng-change-of-select/index.html">
+<meta property="og:site_name" content="Velg 的博客">
+<meta property="og:description" content="ng-change 在select下第一次触发失效因为需要动态注入select options的数据，同时保证注入完数据后，复填选择的数据 同时还对select添加了ng-change事件 结果发现，ng-change默认第一条数据无论怎么点击就是无效 有效状态是，除非点击其他的选项，再去点击第一条options，第一条数据才有效 经过排查，发现 1.这里的select是在弹窗中的 2.弹窗打开的">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-05-30T02:23:08.901Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="angular&#x2F;ng-change of select">
+<meta name="twitter:description" content="ng-change 在select下第一次触发失效因为需要动态注入select options的数据，同时保证注入完数据后，复填选择的数据 同时还对select添加了ng-change事件 结果发现，ng-change默认第一条数据无论怎么点击就是无效 有效状态是，除非点击其他的选项，再去点击第一条options，第一条数据才有效 经过排查，发现 1.这里的select是在弹窗中的 2.弹窗打开的">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src='//push.zhanzhang.baidu.com/push.js'></script>
+</head>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Velg 的博客" rel="home">Velg 的博客</a>
+      </h1>
+      
+        <script type="text/javascript" src="http://api.hitokoto.us/rand?encode=js&charset=utf-8"></script>
+        <h2 class="site-description"><script>hitokoto();</script></h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/archives">Archives</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-angular-ng-change-of-select" class="post-angular-ng-change-of-select post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      angular/ng-change of select
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2019/05/30/angular-ng-change-of-select/" data-id="cjwa1blhz0004qcx51yjszczh" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <h1 id="ng-change-在select下第一次触发失效"><a href="#ng-change-在select下第一次触发失效" class="headerlink" title="ng-change 在select下第一次触发失效"></a>ng-change 在select下第一次触发失效</h1><p>因为需要动态注入select options的数据，同时保证注入完数据后，复填选择的数据</p>
+<p>同时还对select添加了ng-change事件</p>
+<p>结果发现，ng-change默认第一条数据无论怎么点击就是无效</p>
+<p>有效状态是，除非点击其他的选项，再去点击第一条options，第一条数据才有效</p>
+<p>经过排查，发现</p>
+<p>1.这里的select是在弹窗中的</p>
+<p>2.弹窗打开的时候先返回复填信息，然后再调用select注入信息的函数</p>
+<p>3.注入信息后，才复填选择的数据</p>
+<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><p>在ng-change函数中，第一条数据无论怎么点击选择，就是不会console.log出所选择数据</p>
+<p>复查，因为 ng-change 和 ng-model是组合使用，但是发现ng-model的数据页面竟然绑上了</p>
+<h4 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h4><p>因为selcet注入信息的函数是在第三步的时候触发</p>
+<p>突发奇想，觉得，进入页面就加载数据好了，干嘛非要在弹窗弹开的时候加载数据（我以前都是页面级加载数据）</p>
+<p>然后就把函数提出来了</p>
+<p>0.0  好了</p>
+<h4 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h4><p>猜测可能是，异步加载的问题，造成，在获取信息，然后再载入select的数据，然后再填充的时候，因为请求时间关系，造成，ng-model的数据虽然传进去了，但是select的数据还没加载完<br>虽然看着，绑定数据是对的，但是  没有按照 调用函数的先后顺序来执行</p>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2019/05/30/angular-ng-change-of-select/">
+    <time datetime="2019-05-30T02:07:14.000Z" class="entry-date">
+        2019-05-30
+    </time>
+</a>
+    
+    
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+    
+        <span class="nav-next"><a href="/2019/03/27/小程序开发进程笔记分享/" rel="next">小程序开发进程笔记分享 <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="s" id="s" />
+        <input type="submit" id="searchsubmit" value="搜索" />
+    </div>
+</form></aside>
+  
+    
+  
+    
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/2019/05/30/angular-ng-change-of-select/">angular/ng-change of select</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/27/小程序开发进程笔记分享/">小程序开发进程笔记分享</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/27/微信公众号内嵌网页/">微信公众号内嵌网页</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/17/weixin-公众号插件/">weixin 公众号插件</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/01/input-解析/">input 解析</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  
+    
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 刘大旭
+    All rights reserved.</p>
+    <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
+</footer>
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>
