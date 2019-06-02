@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="场景小程序的页面添加跳转或者触发一个函数，发现在超过0.3s的连续点击中
+小程序的机制会多次触发，尤其在使用navigateTo 进行跳转的时候
+快速点击，发现会连续跳转，虽然不会对页面的栈造成堆积，如果你不使用wx.navigateBack
+会造成返回多次现象
+解决方式可以使用throttle节流" />
+  
+
+  
+  
+  
+  
+  
+  
+  <title>小程序节流函数 | Velg 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="场景小程序的页面添加跳转或者触发一个函数，发现在超过0.3s的连续点击中 小程序的机制会多次触发，尤其在使用navigateTo 进行跳转的时候 快速点击，发现会连续跳转，虽然不会对页面的栈造成堆积，如果你不使用wx.navigateBack 会造成返回多次现象 解决方式可以使用throttle节流函数，进行封装一个小程序专有的函数 保证在可控时间内，这个函数的事件只能触发一次 1.首先在util">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小程序节流函数">
+<meta property="og:url" content="http://yoursite.com/2019/06/02/小程序节流函数/index.html">
+<meta property="og:site_name" content="Velg 的博客">
+<meta property="og:description" content="场景小程序的页面添加跳转或者触发一个函数，发现在超过0.3s的连续点击中 小程序的机制会多次触发，尤其在使用navigateTo 进行跳转的时候 快速点击，发现会连续跳转，虽然不会对页面的栈造成堆积，如果你不使用wx.navigateBack 会造成返回多次现象 解决方式可以使用throttle节流函数，进行封装一个小程序专有的函数 保证在可控时间内，这个函数的事件只能触发一次 1.首先在util">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-06-02T08:52:50.467Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="小程序节流函数">
+<meta name="twitter:description" content="场景小程序的页面添加跳转或者触发一个函数，发现在超过0.3s的连续点击中 小程序的机制会多次触发，尤其在使用navigateTo 进行跳转的时候 快速点击，发现会连续跳转，虽然不会对页面的栈造成堆积，如果你不使用wx.navigateBack 会造成返回多次现象 解决方式可以使用throttle节流函数，进行封装一个小程序专有的函数 保证在可控时间内，这个函数的事件只能触发一次 1.首先在util">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src='//push.zhanzhang.baidu.com/push.js'></script>
+</head>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Velg 的博客" rel="home">Velg 的博客</a>
+      </h1>
+      
+        <script type="text/javascript" src="http://api.hitokoto.us/rand?encode=js&charset=utf-8"></script>
+        <h2 class="site-description"><script>hitokoto();</script></h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/archives">Archives</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-小程序节流函数" class="post-小程序节流函数 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      小程序节流函数
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2019/06/02/小程序节流函数/" data-id="cjwepk746000gekx5nspscnj4" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><p>小程序的页面添加跳转或者触发一个函数，发现在超过0.3s的连续点击中</p>
+<p>小程序的机制会多次触发，尤其在使用navigateTo 进行跳转的时候</p>
+<p>快速点击，发现会连续跳转，虽然不会对页面的栈造成堆积，如果你不使用wx.navigateBack</p>
+<p>会造成返回多次现象</p>
+<h3 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h3><p>可以使用throttle节流函数，进行封装一个小程序专有的函数</p>
+<p>保证在可控时间内，这个函数的事件只能触发一次</p>
+<h4 id="1-首先在util-js创建节流函数"><a href="#1-首先在util-js创建节流函数" class="headerlink" title="1.首先在util.js创建节流函数"></a>1.首先在util.js创建节流函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">function throttle(fn, gapTime) &#123;</span><br><span class="line">  if (gapTime == null || gapTime == undefined) &#123;</span><br><span class="line">    gapTime = 1500</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  let _lastTime = null</span><br><span class="line"></span><br><span class="line">  // 返回新的函数</span><br><span class="line">  return function () &#123;</span><br><span class="line">    let _nowTime = + new Date()</span><br><span class="line">    if (_nowTime - _lastTime &gt; gapTime || !_lastTime) &#123;</span><br><span class="line">      fn.apply(this, arguments)   //将this和参数传给原函数</span><br><span class="line">      _lastTime = _nowTime</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>记得要在 module.exports抛出函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">  throttle: throttle</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-在页面逻辑中使用"><a href="#2-在页面逻辑中使用" class="headerlink" title="2.在页面逻辑中使用"></a>2.在页面逻辑中使用</h4><p>首先要引入util.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const util = require(&apos;../../utils/util.js&apos;)</span><br></pre></td></tr></table></figure>
+<p>在需要使用的函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">checkBtn: util.throttle(function (e) &#123;</span><br><span class="line">    wx.navigateTo(&#123;</span><br><span class="line">      url: &apos;../X/X&apos;,</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;, 3000),</span><br></pre></td></tr></table></figure>
+<p>函数中加入的3s为，从触发函数到3s在这个时间内，这个函数只能执行一次</p>
+<p>这样就完美避开了，如何防止多次触发函数事件了</p>
+<p>而且3s后这个函数事件恢复正常</p>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2019/06/02/小程序节流函数/">
+    <time datetime="2019-06-02T08:17:23.000Z" class="entry-date">
+        2019-06-02
+    </time>
+</a>
+    
+    
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+    
+        <span class="nav-next"><a href="/2019/06/02/js获取数据流的类型/" rel="next">js获取数据流的类型 <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="s" id="s" />
+        <input type="submit" id="searchsubmit" value="搜索" />
+    </div>
+</form></aside>
+  
+    
+  
+    
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/02/小程序节流函数/">小程序节流函数</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/02/js获取数据流的类型/">js获取数据流的类型</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/30/angular-ng-change-of-select/">angular/ng-change of select</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/27/小程序开发进程笔记分享/">小程序开发进程笔记分享</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/27/微信公众号内嵌网页/">微信公众号内嵌网页</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  
+    
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 刘大旭
+    All rights reserved.</p>
+    <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
+</footer>
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>
